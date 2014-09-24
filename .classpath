@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-249"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/ImShow-Java-OpenCV-master/Imshow.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/maven-plugin-api-3.0.3.jar/maven-plugin-api-3.0.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Weka/weka-3-6-11/weka.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

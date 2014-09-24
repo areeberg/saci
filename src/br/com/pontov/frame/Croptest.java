@@ -48,8 +48,9 @@ public class Croptest  {
 		
 		//setSize(640,480);
 		String info = "";
-		//code=arrtest.getCode();
-		code=14;
+		code=arrtest.getCode();
+		
+		
 		String[] vetor = new String[10];
 		double[] datas = new double[10];  //15 = training samples; 10 numero de caracteristicas
 		 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info.txt"));

@@ -128,6 +128,11 @@ public class Featurestest {
 	        {
 	     	   key=true;
 	        }
+	        
+	        
+	        
+	    //----------------FOURIER DESCRIPTORS
+	        
 	    
 	    //--------------VETORES E MOMENTO 1
 	        

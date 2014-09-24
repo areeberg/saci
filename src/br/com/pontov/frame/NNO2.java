@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import org.opencv.core.Core;
+import org.opencv.core.Core.MinMaxLocResult;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.TermCriteria;
@@ -26,7 +28,6 @@ public class NNO2{
 	final static int training_samples = 15;
 	final static int test_samples=1;
 	final static int attrib = 900;
-	final static int test_sample = 1;
 	final static int classes = 6;
 	//--------------------------------
 
@@ -85,7 +86,8 @@ public class NNO2{
 		{training_set.put(r, ca,aux[ca]);}
 		
 		}
-		//System.out.print(training_set);   //garantir que o training_set esta correto
+	
+		//System.out.print(training_set.size());   //garantir que o training_set esta correto
 		
 		
 		byte[] aux2 = new byte[training_samples];
@@ -98,30 +100,34 @@ public class NNO2{
 		{
 		training_set_classifications.put(r, 0, aux2[r]);
 		}
-		//System.out.print(training_set_classifications);
+		
+		
 		
 		//ESTRUTURA DA REDE NEURAL (3 CAMADAS)
 		// - one input node per attribute in a sample so 900 input nodes
         // - 16 hidden nodes
         // - 10 output node, one for each class.
 	
-		Mat layers = new Mat(3,1,CvType.CV_32S);
+		Mat layers = new Mat(4,1,CvType.CV_32S);
 		layers.put(0, 0, attrib);
-		layers.put(1, 0, 16);
-		layers.put(2, 0, classes);
+		layers.put(1, 0, 10);
+		layers.put(2, 0, 8);
+		layers.put(3, 0, classes);
 		
-		CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,0.6,1);
+		CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,1,1);
+		
+		
 		
 		CvANN_MLP_TrainParams params = new CvANN_MLP_TrainParams();
 		params.set_train_method(CvANN_MLP_TrainParams.BACKPROP);
-		params.set_bp_dw_scale(0.01);
-		params.set_bp_moment_scale(0.05);
-		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS,1000,0.001));
+		params.set_bp_dw_scale(0.05f);
+		params.set_bp_moment_scale(0.01f);
+		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS,1000,0.000000001));
 		
 		
 		float iterations =network.train(training_set, training_set_classifications, new Mat(), new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);; 
 				network.train(training_set, training_set_classifications, new Mat(), new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);
-				
+
 		//sainda = training_set_classification
 		System.out.println("Training iterations:" + iterations);  
 		
@@ -168,13 +174,12 @@ public class NNO2{
     	
 		
 		Mat classificationResult= new Mat(1, classes, CvType.CV_32F);
-		Mat classificres=new Mat();
 		
 		
 		//PREVISAO
 		network.predict(test_set, classificationResult);
 		
-		//System.out.print(classificationResult.toString());
+		
 		
 		
 		//ANALISE DE RESULTADO
@@ -184,13 +189,16 @@ public class NNO2{
 		float [] mxv = new float[classificationResult.width()];
 		classificationResult.get(0, 0, mxv);
 		double maxValue = mxv[0];
-		System.out.print("classification_Result (" + maxValue + ") ");
+		//System.out.print("classification_Result (" + (int)maxValue + ") ");
+		System.out.print("classification_Result (" + mxv[0] + ") ");
 		
-		
+		MinMaxLocResult mmr = Core.minMaxLoc(classificationResult);
+		double mmrr=1;
+		mmrr=mmr.maxVal;
+		System.out.print("MAXclassification_Result (" + mmrr + ") ");
 		for(int index=0;index<classes;index++)
         {   
-			
-			
+
 			valuea=classificationResult.get(0, index);
 			value=valuea[0];
 			//System.out.print(value);
@@ -199,9 +207,10 @@ public class NNO2{
             	maxValue = value;
                 maxIndex=index;
             }
-            System.out.print(classificationResult.get(0,maxIndex) + " ");
+            //System.out.print(classificationResult.get(0,maxIndex) + " ");
             	
 	}//end for index
+		
 		
 		double[] test_cla = test_set_classifications.get(0, maxIndex);
 		double tcla=test_cla[0];
@@ -219,7 +228,6 @@ public class NNO2{
                     break;
                 }
             }
-			
 			
 			
 		} //end if tcla
