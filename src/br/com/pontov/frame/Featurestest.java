@@ -134,11 +134,11 @@ public class Featurestest {
 	        
 	    //----------------FOURIER DESCRIPTORS
 	        Point[] arri = contours.get(largest_contour_index).toArray();
-	        Mat pointsX = new Mat(new Size(1,128), CvType.CV_32FC1);
-	        Mat pointsY = new Mat(new Size(1,128), CvType.CV_32FC1);    
-	        int delta = arri.length / 128;             // 128 points from contour
+	        Mat pointsX = new Mat(new Size(1,20), CvType.CV_32FC1);
+	        Mat pointsY = new Mat(new Size(1,20), CvType.CV_32FC1);    
+	        int delta = arri.length / 20;             // 20 points from contour
 	        
-	        for(int i = 0, j = 0; i < arri.length && j < 128; i += delta, ++j) {
+	        for(int i = 0, j = 0; i < arri.length && j < 20; i += delta, ++j) {
 	        	   pointsX.put(j, 0, arri[i].x); 
 	        	   pointsY.put(j, 0, arri[i].y); 
 	        	}   
@@ -155,51 +155,62 @@ public class Featurestest {
 	     // scale invariant Fi = Fi / |F1|
 	        double Re = complexI.get(1,0)[0];
 	        double Im = complexI.get(1,0)[1];
-	        double Re2 = complexI.get(2,0)[0];
-	        double Im2 = complexI.get(2,0)[1];
-	        double Re3 = complexI.get(3,0)[0];
-	        double Im3 = complexI.get(3,0)[1];
-	        System.out.println(""+Re+"\n");
-	        System.out.print(Im);
-	        System.out.println(""+Re2+"\n");
-	        System.out.print(Im2);
-	        System.out.println(""+Re3+"\n");
-	        System.out.print(Im3);
+
 	        
-	        double magF1 = Math.sqrt(Re*Re + Im*Im);
-	        double magF2=Math.sqrt(Re2*Re2 + Im2*Im2);
-	        double magF3=Math.sqrt(Re3*Re3 + Im3*Im3);
-	        System.out.println(""+magF1+"\n");
-	        System.out.println(""+magF2+"\n");
-	        System.out.println(""+magF3+"\n");
+	       // System.out.println(""+Re+"\n");
+	       // System.out.print(Im);
+	      
+	        
+	        double magF1=Math.sqrt(Re*Re + Im*Im);
+
+	        System.out.println();
+	        
+	        System.out.print(complexI.rows());
+	        double [][] compli = new double [20][2];
 	        
 	        for(int i = 2; i < complexI.rows(); ++i) {
 	           double[] newVal = new double[2];
 	           newVal[0] = complexI.get(i, 0)[0] / magF1;
 	           newVal[1] = complexI.get(i, 0)[1] / magF1;
+	           
+	           compli[i][0]=newVal[0];
+	           compli[i][1]=newVal[1];
+	           
 	           complexI.put(i, 0, newVal);
+	           
 	        }
-	       // System.out.print(complexI);
+	        
+	        System.out.print(compli);
+	        
+	        
+	        
+	       
 	       
 	        
 	        // rotation invariant |Fi|
 	        Core.split(complexI, planes);            // planes[0] = Re(DFT(I), planes[1] = Im(DFT(I))
 	        Mat dftMag = new Mat();
 	        Core.magnitude(planes.get(0), planes.get(1), dftMag);
+	       double [] magd = new double[dftMag.rows()];
+	       double newVal = 0.0;
 	       
+	       
+	        for (int i=0 ; i< dftMag.rows();i++)
+	        {
+	        	
+	        	newVal =  dftMag.get(i, 0)[0]; 
+	        	
+	        	magd[i]= newVal;
+	        }
+	        System.out.print(magd);
 	        
-	        Mat ucharmag = new Mat();
-	        dftMag.convertTo(ucharmag, CvType.CV_8U);
-	        byte [] magni = new byte[128]; 
-	        ucharmag.get(0, 0,magni);
-	        System.out.print(magni.toString());
-	        System.out.println();	
 	        
-	        
-	        Mat idft = new Mat(new Size(1,128), CvType.CV_32FC2);
+	        //INVERSA DE FOURIER, CASO NECESSARIO
+	        /*
+	        Mat idft = new Mat(new Size(1,20), CvType.CV_32FC2);
 	        Core.dft(dftMag, idft, Core.DFT_INVERSE, 0);
 	        System.out.print(idft.size());
-	        
+	        */
 	        
 	    //--------------VETORES E MOMENTO 1
 	        
