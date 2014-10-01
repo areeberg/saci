@@ -150,22 +150,11 @@ public class Featurestest {
 	        Core.merge(planes, complexI);                   
 	        Core.dft(complexI, complexI);
 	        
-	     
-
 	     // scale invariant Fi = Fi / |F1|
 	        double Re = complexI.get(1,0)[0];
 	        double Im = complexI.get(1,0)[1];
 
-	        
-	       // System.out.println(""+Re+"\n");
-	       // System.out.print(Im);
-	      
-	        
 	        double magF1=Math.sqrt(Re*Re + Im*Im);
-
-	        System.out.println();
-	        
-	        System.out.print(complexI.rows());
 	        double [][] compli = new double [20][2];
 	        
 	        for(int i = 2; i < complexI.rows(); ++i) {
@@ -179,31 +168,20 @@ public class Featurestest {
 	           complexI.put(i, 0, newVal);
 	           
 	        }
-	        
-	        System.out.print(compli);
-	        
-	        
-	        
-	       
-	       
-	        
 	        // rotation invariant |Fi|
 	        Core.split(complexI, planes);            // planes[0] = Re(DFT(I), planes[1] = Im(DFT(I))
 	        Mat dftMag = new Mat();
 	        Core.magnitude(planes.get(0), planes.get(1), dftMag);
 	       double [] magd = new double[dftMag.rows()];
-	       double newVal = 0.0;
-	       
 	       
 	        for (int i=0 ; i< dftMag.rows();i++)
 	        {
-	        	
+	        	double newVal = 0.0;
 	        	newVal =  dftMag.get(i, 0)[0]; 
-	        	
 	        	magd[i]= newVal;
 	        }
-	        System.out.print(magd);
-	        
+	        arrtest.setDescri(magd);
+	      //  System.out.println();
 	        
 	        //INVERSA DE FOURIER, CASO NECESSARIO
 	        /*

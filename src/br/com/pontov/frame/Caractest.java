@@ -17,8 +17,10 @@ public class Caractest {
 	private double numBins;
 	private double pct2pk;
 	private double bimodalap;
+	private double[] descri;  //criar descritores
 	
-	public Caractest (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap)
+	
+	public Caractest (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, double [] descri)
 	{
 		this.URL = URL;
 		this.URL2 = URL2;
@@ -33,6 +35,7 @@ public class Caractest {
 	    this.numBins=numBins;
 	    this.pct2pk=pct2pk;
 	    this.bimodalap=bimodalap;
+	    this.descri=descri;
 	}
 	public Caractest()
 	{}
@@ -77,7 +80,9 @@ public class Caractest {
 	public double getBimodalap(){
 		return bimodalap;
 	}
-	
+	public double[] getDescri(){
+		return descri;
+	}
 	//--------SETTER
 	public void setName(String URL){
 		this.URL=URL;
@@ -117,5 +122,8 @@ public class Caractest {
 	}
 	public void setBimodalap(double bimodalap){
 		this.bimodalap=bimodalap;
+	}
+	public void setDescri(double[] descri){
+		this.descri=descri;
 	}
 }

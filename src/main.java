@@ -154,21 +154,18 @@ public class main extends JPanel {
        }     
            
      //---------------------------------------------------------------------------------
-       File file = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info.txt");
+       File fileg = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info.txt");
        
 		// if file doesnt exists, then create it
-		if (!file.exists()) {
-			file.createNewFile();
+		if (!fileg.exists()) {
+			fileg.createNewFile();
 		}
-		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		FileWriter fw = new FileWriter(fileg.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
 		String content = new String();
-		
-		
+
 		content = "@relation info\n@attribute code numeric\n@attribute contour numeric\n@attribute elongation numeric\n@attribute angle numeric\n@attribute c1 numeric\n@attribute c2 numeric\n@attribute c3 numeric\n@attribute c4 numeric\n@attribute type {Capacitor,ResistorSmall,ResistorBig,Schmitt trigger,Transistor,PowerTransistor}\n@data";
-		
-		
-		
+
 		for (int i=1;i<code;i++)  //numero de arquivos salvos para treinamento
 		{
 		content += "\n"+arr[i].getCode()+","+arr[i].getContour()+","+arr[i].getElongation()+","+arr[i].getAngle()+","+arr[i].getC1()+","+arr[i].getC2()+","+arr[i].getC3()+","+arr[i].getC4()+","+arr[i].getType()+"";		
@@ -178,17 +175,15 @@ public class main extends JPanel {
 		bw.close();
 		//---------------------------------------------------------------------------------
 		
-		File file2 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt");
+		File fileg2 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt");
 	       
 		// if file doesnt exists, then create it
-		if (!file2.exists()) {
-			file2.createNewFile();
+		if (!fileg2.exists()) {
+			fileg2.createNewFile();
 		}
-		FileWriter fw2 = new FileWriter(file2.getAbsoluteFile());
+		FileWriter fw2 = new FileWriter(fileg2.getAbsoluteFile());
 		BufferedWriter bw2 = new BufferedWriter(fw2);
 		String content2 = new String();
-		
-		
 		content2 = "@relation info2\n@attribute histograma numeric\n\n@data";
 		for (int i=1;i<code;i++)  //numero de arquivos salvos para treinamento
 		{
@@ -199,13 +194,13 @@ public class main extends JPanel {
 		bw2.close();
 		
 		//---------------------------------------------------------------------------------
-		File file3 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info3.txt");
+		File fileg3 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info3.txt");
 	       
 		// if file doesnt exists, then create it
-		if (!file3.exists()) {
-			file3.createNewFile();
+		if (!fileg3.exists()) {
+			fileg3.createNewFile();
 		}
-		FileWriter fw3 = new FileWriter(file3.getAbsoluteFile());
+		FileWriter fw3 = new FileWriter(fileg3.getAbsoluteFile());
 		BufferedWriter bw3 = new BufferedWriter(fw3);
 		String content3 = new String();
 		
@@ -221,11 +216,31 @@ public class main extends JPanel {
 		bw3.write(content3);
 		bw3.close();
        
+		
+		//---------------------------------------------------------------------------------
+		File fileg4 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fourierdesc.txt");
+	       
+		// if file doesnt exists, then create it
+		if (!fileg4.exists()) {
+			fileg4.createNewFile();
+		}
+		FileWriter fw4 = new FileWriter(fileg4.getAbsoluteFile());
+		BufferedWriter bw4 = new BufferedWriter(fw4);
+		String content4 = new String();
+		
+		// "Capacitor", "ResistorSmall","ResistorBig", "Schmitt trigger","Transistor","PowerTransistor"
+		content4 = "Descritores de Fourier - Golden Images (em ordem de aquisição de imagens)";
+		//content3 = "@relation info3\n@attribute numBins real\n@attribute pct2pk real\n@data";
+		for (int i=1;i<code;i++)  //numero de arquivos salvos para treinamento
+		{
+		content4 +="\n"+arr[i].getDescri()[0]+","+arr[i].getDescri()[1]+","+arr[i].getDescri()[2]+","+arr[i].getDescri()[3]+","+arr[i].getDescri()[4]+","+arr[i].getDescri()[5]+","+arr[i].getDescri()[6]+","+arr[i].getDescri()[7]+","+arr[i].getDescri()[8]+","+arr[i].getDescri()[9]+","+arr[i].getDescri()[10]+","+arr[i].getDescri()[11]+","+arr[i].getDescri()[12]+","+arr[i].getDescri()[13]+","+arr[i].getDescri()[14]+","+arr[i].getDescri()[15]+","+arr[i].getDescri()[16]+","+arr[i].getDescri()[17]+","+arr[i].getDescri()[18]+","+arr[i].getDescri()[19]+""; 
+		}
+		System.out.print(content4);
+		bw4.write(content4);
+		bw4.close();
        
 		}// end if filegi exists
-		
-		
-		
+
 		//--------------------------TEST IMAGES
 		if (filegi.exists()) {
 			//READ FILES;
@@ -281,13 +296,13 @@ public class main extends JPanel {
 		       
 				
 				//---------------------------------------------------------------------------------
-				File file3 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt");
+				File filet = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt");
 			       
 				// if file doesnt exists, then create it
-				if (!file3.exists()) {
-					file3.createNewFile();
+				if (!filet.exists()) {
+					filet.createNewFile();
 				}
-				FileWriter fw3 = new FileWriter(file3.getAbsoluteFile());
+				FileWriter fw3 = new FileWriter(filet.getAbsoluteFile());
 				BufferedWriter bw3 = new BufferedWriter(fw3);
 				String content3 = new String();
 				
@@ -302,10 +317,32 @@ public class main extends JPanel {
 				System.out.print(content3);
 				bw3.write(content3);
 				bw3.close();
+				
+				//---------------------------------------------------------------------------------
+				File filet2 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fourierdesctest.txt");
+			       
+				// if file doesnt exists, then create it
+				if (!filet2.exists()) {
+					filet2.createNewFile();
+				}
+				FileWriter fw2 = new FileWriter(filet2.getAbsoluteFile());
+				BufferedWriter bw2 = new BufferedWriter(fw2);
+				String content2 = new String();
+				
+				// "Capacitor", "ResistorSmall","ResistorBig", "Schmitt trigger","Transistor","PowerTransistor"
+				content2 = "Descritores de Fourier para teste";
+				//content3 = "@relation info3\n@attribute numBins real\n@attribute pct2pk real\n@data";
+				for (int i=1;i<code;i++)  //numero de arquivos salvos para treinamento
+				{
+				content2 += "\n"+arrtest[i].getDescri()[0]+","+arrtest[i].getDescri()[1]+","+arrtest[i].getDescri()[2]+","+arrtest[i].getDescri()[3]+","+arrtest[i].getDescri()[4]+","+arrtest[i].getDescri()[5]+","+arrtest[i].getDescri()[6]+","+arrtest[i].getDescri()[7]+","+arrtest[i].getDescri()[8]+","+arrtest[i].getDescri()[9]+","+arrtest[i].getDescri()[10]+","+arrtest[i].getDescri()[11]+","+arrtest[i].getDescri()[12]+","+arrtest[i].getDescri()[13]+","+arrtest[i].getDescri()[14]+","+arrtest[i].getDescri()[15]+","+arrtest[i].getDescri()[16]+","+arrtest[i].getDescri()[17]+","+arrtest[i].getDescri()[18]+","+arrtest[i].getDescri()[19]+"";		
+				}
+				System.out.print(content2);
+				bw2.write(content2);
+				bw2.close();
 		}
 		
 		
-		System.out.printf("teste");
+		System.out.printf("FIM");
 		
 	}
 

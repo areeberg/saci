@@ -27,12 +27,12 @@ public class NNO2{
 	//--------------------------------
 	final static int training_samples = 15;
 	final static int test_samples=1;
-	final static int attrib = 900;
+	final static int attrib = 20;
 	final static int classes = 6;
 	//--------------------------------
 
 
-	static byte[][] read_dataset(String filename, byte[][] datas,  int total_samples) throws IOException
+	static double[][] read_dataset(String filename, double[][] datas,  int total_samples) throws IOException
 	{
 
 	    //open the file
@@ -40,7 +40,7 @@ public class NNO2{
 	   
 	    String info = "";
 	 
-	    datas = new byte[training_samples][attrib+1];  //+1 pois contem a classe
+	    datas = new double[training_samples][attrib+1];  //+1 pois contem a classe
 	    String[] vetor = new String[attrib+1];
 	    for (int a = 0; a < training_samples; a++)
         { info = inputfile.readLine();
@@ -49,12 +49,16 @@ public class NNO2{
         
         vetor = info.split(",");
       
-        
+  
         for (int p = 0; p < vetor.length; p++) 
-        { datas[a][p] = (byte) Double.parseDouble(vetor[p]);}
+        {
+        	datas[a][p] = (double) Double.parseDouble(vetor[p]);
+        }
 
         }
 
+	    
+	    
 	 try {
 		inputfile.close();
 	} catch (IOException e) {
@@ -64,42 +68,88 @@ public class NNO2{
 	// System.out.print(datas);   		//DATAS CONTEM TODAS AS INFO DAS IMAGENS
 	 return datas;
 	}
+	//--------------------------------------------------------------------------------------------------------------
+	static double[][] read_datasettest(String filename, double[][] datatest,  int total_samples) throws IOException
+	{
+
+	    //open the file
+	    BufferedReader inputfile =  new BufferedReader(new FileReader(filename));
+	   
+	    String info = "";
+	 
+	    datatest = new double[1][attrib+1];  // 1 sample + num de atributos (20)
+	    String[] vetor = new String[attrib+1];
+	    
+	    for (int a = 0; a < 1; a++)  //1 = numero de imagens a serem testadas
+        { info = inputfile.readLine();
+        
+        //System.out.print(datas);
+        
+        vetor = info.split(",");
+        double aux=0.0;
+        byte aux2=(byte) 2192.2341;
+        for (int p = 0; p < vetor.length; p++) 
+        { datatest[a][p] = (double) Double.parseDouble(vetor[p]);
+        aux=(double) Double.parseDouble(vetor[p]);
+        aux2=(byte) aux;
+  
+        }
+        }
+	    
+	    
+	 try {
+		inputfile.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	// System.out.print(datas);   		//DATAS CONTEM TODAS AS INFO DAS IMAGENS
+	 return datatest;
+	}
+	
+	
+	
+	//--------------------------------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) throws Exception {
 		System.loadLibrary("opencv_java249");
 		Mat training_set = new Mat(training_samples, attrib, CvType.CV_32F);
 		Mat training_set_classifications = new Mat(training_samples, classes, CvType.CV_32F); // esta com 15*1
-		byte[][] datas = new byte[training_samples][attrib+1];
+		Mat sampleWts =  new Mat(training_samples,1,CvType.CV_32F);
+		
+		double[][] datas = new double[training_samples][attrib+1];
+		
 	
 		datas = read_dataset("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt", datas, training_samples);
-		//System.out.print(datas);   		//DATAS CONTEM TODAS AS INFO DAS IMAGENS
-
+		
 		for (int r=0;r<training_samples;r++)
 		{
-			byte[] aux = new byte[attrib];
+			double[] aux = new double[attrib];
+			
 		for (int c=0;c < attrib;c++)
 		{
 			//Copia as informacoes
 			aux[c]=datas[r][c];
 		}
-		for (int ca = 0;ca<attrib;ca++)
-		{training_set.put(r, ca,aux[ca]);}
+		
+		training_set.put(0, 0, aux);  //TESTAR ISSO
+		
+		//for (int ca = 0;ca<attrib;ca++)
+		//{training_set.put(r, ca,aux[ca]);}
 		
 		}
 	
 		//System.out.print(training_set.size());   //garantir que o training_set esta correto
 		
 		
-		byte[] aux2 = new byte[training_samples];
+		double[] aux2 = new double[training_samples];
 		for (int r=0;r<training_samples;r++)
 		{
-			aux2[r]=datas[r][900];	
+			aux2[r]= datas[r][20];	
 		}
-		
-		for (int r=0;r<training_samples;r++)
-		{
-		training_set_classifications.put(r, 0, aux2[r]);
-		}
+		training_set_classifications.put(0, 0, aux2);
+		//for (int r=0;r<training_samples;r++)
+		//{training_set_classifications.put(r, 0, aux2[r]);}
 		
 		
 		
@@ -108,15 +158,20 @@ public class NNO2{
         // - 16 hidden nodes
         // - 10 output node, one for each class.
 	
-		Mat layers = new Mat(4,1,CvType.CV_32S);
+		Mat layers = new Mat(3,1,CvType.CV_32S);
 		layers.put(0, 0, attrib);
-		layers.put(1, 0, 10);
-		layers.put(2, 0, 8);
-		layers.put(3, 0, classes);
+		layers.put(1, 0, 15);
+		layers.put(2, 0, classes);
+	
+		
+		for (int k=0;k<=training_samples;k++)
+		{
+		sampleWts.put(k, 0,1);
+		}
 		
 		CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,1,1);
-		
-		
+		//CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,0,0);
+		network.create(layers);
 		
 		CvANN_MLP_TrainParams params = new CvANN_MLP_TrainParams();
 		params.set_train_method(CvANN_MLP_TrainParams.BACKPROP);
@@ -125,8 +180,11 @@ public class NNO2{
 		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS,1000,0.000000001));
 		
 		
-		float iterations =network.train(training_set, training_set_classifications, new Mat(), new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);; 
-				network.train(training_set, training_set_classifications, new Mat(), new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);
+	
+		
+		float iterations =network.train(training_set, training_set_classifications, sampleWts, new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);; 
+				network.train(training_set, training_set_classifications,sampleWts, new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);
+				
 
 		//sainda = training_set_classification
 		System.out.println("Training iterations:" + iterations);  
@@ -134,7 +192,7 @@ public class NNO2{
 		network.save("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainedNNO.xml");
 		
 		
-		//---------------------------TESTE
+		//---------------------------TESTE------------------------------------------------------------------------------------------------
 		Mat test_sample = new Mat();
 		int correct_class = 0;
     	int wrong_class = 0;
@@ -142,33 +200,42 @@ public class NNO2{
     	
     	Mat test_set = new Mat(test_samples, attrib, CvType.CV_32F);
 		Mat test_set_classifications = new Mat(test_samples, classes, CvType.CV_32F); // esta com 15*1
-    	byte[][] datatest = new byte[1][attrib+1];
-    	datatest = read_dataset("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt", datatest, 1);
+		//The weight of each training data sample. We'll later set all to equal weights.
+
+		
+    	double[][] datatest = new double[1][attrib+1];
+    	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", datatest, 1);
     	
+    	System.out.print(datatest);
+   System.out.println();
+   
     	for (int r=0;r<test_samples;r++)
 		{
-			byte[] aux = new byte[attrib];
+			double[] aux = new double[attrib];
 		for (int c=0;c < attrib;c++)
 		{
 			//Copia as informacoes
-			aux[c]=datatest[r][c];
+			aux[c]= datatest[r][c];
 		}
-		for (int ca = 0;ca<attrib;ca++)
-		{test_set.put(r, ca,aux[ca]);}
+		test_set.put(0, 0, aux); //TESTAR ISSO
+		
+		//for (int ca = 0;ca<attrib;ca++)
+	//	{test_set.put(r, ca,aux[ca]);}
 		
 		}
 		//System.out.print(test_set);   //garantir que o training_set esta correto
 		
 		
-		byte[] aux2t = new byte[test_samples];
+		double[] aux2t = new double[test_samples];
 		for (int r=0;r<test_samples;r++)
 		{
-			aux2t[r]=datatest[r][900];	
+			aux2t[r]= datatest[r][20];	
 		}
+
 		
 		for (int r=0;r<test_samples;r++)
 		{
-		test_set_classifications.put(r, 0, aux2t[r]);
+	//	test_set_classifications.put(r, 0, aux2t[r]);
 		}
 		//System.out.print(test_set_classifications);
     	
@@ -178,8 +245,6 @@ public class NNO2{
 		
 		//PREVISAO
 		network.predict(test_set, classificationResult);
-		
-		
 		
 		
 		//ANALISE DE RESULTADO

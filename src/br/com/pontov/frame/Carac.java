@@ -21,8 +21,9 @@ public class Carac {
 	private int c2;
 	private int c3;
 	private int c4;
+	private double[] descri;
 	
-	public Carac (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, int c1, int c2, int c3, int c4)
+	public Carac (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, int c1, int c2, int c3, int c4,double[] descri)
 	{
 		this.URL = URL;
 		this.URL2 = URL2;
@@ -41,6 +42,7 @@ public class Carac {
 	    this.c2=c2;
 	    this.c3=c3;
 	    this.c4=c4;
+	    this.descri=descri;
 	}
 	public Carac()
 	{}
@@ -97,6 +99,9 @@ public class Carac {
 	public int getC4(){
 		return c4;
 	}
+	public double[]getDescri(){
+		return descri;
+	}
 	
 	//--------SETTER
 	public void setName(String URL){
@@ -149,5 +154,8 @@ public class Carac {
 	}
 	public void setC4(int c4){
 		this.c4=c4;
+	}
+	public void setDescri(double[] descri){
+		this.descri=descri;
 	}
 }

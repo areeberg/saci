@@ -1,6 +1,7 @@
 package br.com.pontov.frame;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.opencv.core.Core;
@@ -131,6 +132,58 @@ public class Features {
 	     	   key=true;
 	        }
 	    
+	        
+	        //----------------FOURIER DESCRIPTORS
+	        Point[] arri = contours.get(largest_contour_index).toArray();
+	        Mat pointsX = new Mat(new Size(1,20), CvType.CV_32FC1);
+	        Mat pointsY = new Mat(new Size(1,20), CvType.CV_32FC1);    
+	        int delta = arri.length / 20;             // 20 points from contour
+	        
+	        for(int i = 0, j = 0; i < arri.length && j < 20; i += delta, ++j) {
+	        	   pointsX.put(j, 0, arri[i].x); 
+	        	   pointsY.put(j, 0, arri[i].y); 
+	        	}   
+	      
+	        List<Mat> planes = new ArrayList<Mat>();
+	        planes.add(pointsX);
+	        planes.add(pointsY);
+	        Mat complexI = new Mat();
+	        Core.merge(planes, complexI);                   
+	        Core.dft(complexI, complexI);
+	        
+	     // scale invariant Fi = Fi / |F1|
+	        double Re = complexI.get(1,0)[0];
+	        double Im = complexI.get(1,0)[1];
+
+	        double magF1=Math.sqrt(Re*Re + Im*Im);
+	        double [][] compli = new double [20][2];
+	        
+	        for(int i = 2; i < complexI.rows(); ++i) {
+	           double[] newVal = new double[2];
+	           newVal[0] = complexI.get(i, 0)[0] / magF1;
+	           newVal[1] = complexI.get(i, 0)[1] / magF1;
+	           
+	           compli[i][0]=newVal[0];
+	           compli[i][1]=newVal[1];
+	           
+	           complexI.put(i, 0, newVal);
+	           
+	        }
+	        // rotation invariant |Fi|
+	        Core.split(complexI, planes);            // planes[0] = Re(DFT(I), planes[1] = Im(DFT(I))
+	        Mat dftMag = new Mat();
+	        Core.magnitude(planes.get(0), planes.get(1), dftMag);
+	       double [] magd = new double[dftMag.rows()];
+	       
+	        for (int i=0 ; i< dftMag.rows();i++)
+	        {
+	        	double newVal = 0.0;
+	        	newVal =  dftMag.get(i, 0)[0]; 
+	        	magd[i]= newVal;
+	        }
+	        arr.setDescri(magd);
+	      //  System.out.println();
+	        
 	    //--------------VETORES E MOMENTO 1
 	        
 	        if (key==false)
