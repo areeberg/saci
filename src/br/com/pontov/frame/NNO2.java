@@ -29,6 +29,7 @@ public class NNO2{
 	final static int test_samples=1;
 	final static int attrib = 20;
 	final static int classes = 6;
+	final static int input = training_samples*attrib;
 	//--------------------------------
 
 
@@ -51,14 +52,10 @@ public class NNO2{
       
   
         for (int p = 0; p < vetor.length; p++) 
-        {
-        	datas[a][p] = (double) Double.parseDouble(vetor[p]);
-        }
+        {datas[a][p] = (double) Double.parseDouble(vetor[p]);}
 
         }
 
-	    
-	    
 	 try {
 		inputfile.close();
 	} catch (IOException e) {
@@ -86,14 +83,9 @@ public class NNO2{
         //System.out.print(datas);
         
         vetor = info.split(",");
-        double aux=0.0;
-        byte aux2=(byte) 2192.2341;
+
         for (int p = 0; p < vetor.length; p++) 
-        { datatest[a][p] = (double) Double.parseDouble(vetor[p]);
-        aux=(double) Double.parseDouble(vetor[p]);
-        aux2=(byte) aux;
-  
-        }
+        { datatest[a][p] = (double) Double.parseDouble(vetor[p]);}
         }
 	    
 	    
@@ -109,17 +101,16 @@ public class NNO2{
 	
 	
 	
-	//--------------------------------------------------------------------------------------------------------------
+	//-----------------------------------MAIN---------------------------------------------------------------------------
 	
 	public static void main(String[] args) throws Exception {
 		System.loadLibrary("opencv_java249");
-		Mat training_set = new Mat(training_samples, attrib, CvType.CV_32F);
-		Mat training_set_classifications = new Mat(training_samples, classes, CvType.CV_32F); // esta com 15*1
-		Mat sampleWts =  new Mat(training_samples,1,CvType.CV_32F);
+		Mat training_set = new Mat(training_samples, attrib, CvType.CV_32FC1);
+		Mat training_set_classifications = new Mat(training_samples, classes, CvType.CV_32FC1); // esta com 15*1
+		Mat sampleWts =  new Mat(training_samples,1,CvType.CV_32FC1);
 		
 		double[][] datas = new double[training_samples][attrib+1];
-		
-	
+
 		datas = read_dataset("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt", datas, training_samples);
 		
 		for (int r=0;r<training_samples;r++)
@@ -132,14 +123,17 @@ public class NNO2{
 			aux[c]=datas[r][c];
 		}
 		
-		training_set.put(0, 0, aux);  //TESTAR ISSO
+	System.out.print(aux);
+		training_set.put(r, 0,aux);
 		
 		//for (int ca = 0;ca<attrib;ca++)
 		//{training_set.put(r, ca,aux[ca]);}
 		
 		}
+		
+		
 	
-		//System.out.print(training_set.size());   //garantir que o training_set esta correto
+		System.out.print(training_set.size());   //garantir que o training_set esta correto
 		
 		
 		double[] aux2 = new double[training_samples];
@@ -147,20 +141,21 @@ public class NNO2{
 		{
 			aux2[r]= datas[r][20];	
 		}
-		training_set_classifications.put(0, 0, aux2);
-		//for (int r=0;r<training_samples;r++)
-		//{training_set_classifications.put(r, 0, aux2[r]);}
+		//training_set_classifications.put(0, 0, aux2);
 		
+		for (int r=0;r<training_samples;r++)
+		{training_set_classifications.put(r, 0, aux2);}
+		System.out.print(training_set_classifications.size());  //15x6
 		
 		
 		//ESTRUTURA DA REDE NEURAL (3 CAMADAS)
-		// - one input node per attribute in a sample so 900 input nodes
+		// - one input node per attribute in a sample so 20*samples input nodes
         // - 16 hidden nodes
-        // - 10 output node, one for each class.
+        // - 6 output node, one for each class.
 	
-		Mat layers = new Mat(3,1,CvType.CV_32S);
-		layers.put(0, 0, attrib);
-		layers.put(1, 0, 15);
+		Mat layers = new Mat(3,1,CvType.CV_32SC1);
+		layers.put(0, 0, training_set.cols());
+		layers.put(1, 0, 16);
 		layers.put(2, 0, classes);
 	
 		
@@ -169,7 +164,7 @@ public class NNO2{
 		sampleWts.put(k, 0,1);
 		}
 		
-		CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,1,1);
+		CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,1,0);
 		//CvANN_MLP network = new CvANN_MLP (layers, CvANN_MLP.SIGMOID_SYM,0,0);
 		network.create(layers);
 		
@@ -177,14 +172,13 @@ public class NNO2{
 		params.set_train_method(CvANN_MLP_TrainParams.BACKPROP);
 		params.set_bp_dw_scale(0.05f);
 		params.set_bp_moment_scale(0.01f);
-		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS,1000,0.000000001));
+		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS,200000,0.00000000001));
 		
 		
 	
 		
-		float iterations =network.train(training_set, training_set_classifications, sampleWts, new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);; 
-				network.train(training_set, training_set_classifications,sampleWts, new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);
-				
+		float iterations = network.train(training_set, training_set_classifications, sampleWts, new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);
+				//network.train(training_set, training_set_classifications,sampleWts, new Mat(), params, CvANN_MLP_TrainParams.BACKPROP);
 
 		//sainda = training_set_classification
 		System.out.println("Training iterations:" + iterations);  
@@ -206,8 +200,8 @@ public class NNO2{
     	double[][] datatest = new double[1][attrib+1];
     	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", datatest, 1);
     	
-    	System.out.print(datatest);
-   System.out.println();
+    	//System.out.print(datatest);
+   //System.out.println();
    
     	for (int r=0;r<test_samples;r++)
 		{
@@ -217,13 +211,15 @@ public class NNO2{
 			//Copia as informacoes
 			aux[c]= datatest[r][c];
 		}
-		test_set.put(0, 0, aux); //TESTAR ISSO
+		//System.out.print(aux);
+		test_set.put(0, 0, aux); 
 		
-		//for (int ca = 0;ca<attrib;ca++)
-	//	{test_set.put(r, ca,aux[ca]);}
-		
+		/*
+		for (int ca = 0;ca<attrib;ca++)
+		{test_set.put(r, ca,aux[ca]);}	
+		*/
 		}
-		//System.out.print(test_set);   //garantir que o training_set esta correto
+		//System.out.print(test_set);
 		
 		
 		double[] aux2t = new double[test_samples];
@@ -231,28 +227,34 @@ public class NNO2{
 		{
 			aux2t[r]= datatest[r][20];	
 		}
-
+		test_set_classifications.put(0, 0, aux2t);
 		
+		/*
 		for (int r=0;r<test_samples;r++)
 		{
-	//	test_set_classifications.put(r, 0, aux2t[r]);
+		test_set_classifications.put(r, 0, aux2t[r]);
 		}
 		//System.out.print(test_set_classifications);
-    	
+    	*/
 		
-		Mat classificationResult= new Mat(1, classes, CvType.CV_32F);
+		Mat classificationResult = new Mat(1, classes, CvType.CV_32FC1);
 		
 		
 		//PREVISAO
 		network.predict(test_set, classificationResult);
 		
-		
+
 		//ANALISE DE RESULTADO
 		int maxIndex = 0;
 		double[] valuea = new double[0];
 		double value=0.0;
 		float [] mxv = new float[classificationResult.width()];
-		classificationResult.get(0, 0, mxv);
+		
+		classificationResult.get(0, 0, mxv);	
+		//classificationResult.get(0, 0, mxv2);
+		System.out.println(""+mxv[0]+" "+mxv[1]+" "+mxv[2]+" "+mxv[3]+" "+mxv[4]+" "+mxv[5]+"");
+		System.out.println();
+		
 		double maxValue = mxv[0];
 		//System.out.print("classification_Result (" + (int)maxValue + ") ");
 		System.out.print("classification_Result (" + mxv[0] + ") ");
@@ -260,7 +262,9 @@ public class NNO2{
 		MinMaxLocResult mmr = Core.minMaxLoc(classificationResult);
 		double mmrr=1;
 		mmrr=mmr.maxVal;
+		
 		System.out.print("MAXclassification_Result (" + mmrr + ") ");
+		
 		for(int index=0;index<classes;index++)
         {   
 

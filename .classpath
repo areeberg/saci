@@ -5,6 +5,26 @@
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/ImShow-Java-OpenCV-master/Imshow.jar"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/maven-plugin-api-3.0.3.jar/maven-plugin-api-3.0.3.jar"/>
 	<classpathentry kind="lib" path="/Applications/Weka/weka-3-6-11/weka.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-adapters-2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-contrib-2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-core-2.9.jar" sourcepath="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-core-2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-imgrec-2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-ocr-2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/neuroph-2.9/neuroph-samples-2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/jcl-over-slf4j-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/jcl-over-slf4j-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/jul-to-slf4j-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/jul-to-slf4j-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/log4j-over-slf4j-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/log4j-over-slf4j-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/osgi-over-slf4j-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/osgi-over-slf4j-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-api-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-ext-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-ext-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-jdk14-1.7.7-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-jdk14-1.7.7.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

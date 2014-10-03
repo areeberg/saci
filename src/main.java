@@ -52,7 +52,7 @@ import javax.swing.JFrame;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.text.html.ImageView;
-import javax.vecmath.Point2f;
+
 
 import org.opencv.highgui.*;
 import org.opencv.core.*;
