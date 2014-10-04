@@ -132,13 +132,37 @@ public class NNeuroph extends SigmoidDeltaRule {
 		int class1=0;
 		
 		
+		//find biggest and smaller value, adicionar margem de seguranca no biggest value
+		
+		double big=0;
+		double small=10;
+		double aux=0;
+		double aux2=110;
+		for (int r=0;r<training_samples;r++)
+		{	
+		for (int c=0;c < attrib;c++)
+		{
+			aux = datas[r][c];
+			aux2=datas[r][c];
+			if (aux>big)	big=aux;
+			
+			if (aux2<small) small=aux2;
+			
+		}}
+		
+		big=big+1000;
+		
+		//System.out.print(big);
+		System.out.print(small);
+		System.out.println();
+		
 		for (int r=0;r<training_samples;r++)
 		{	
 		for (int c=0;c < attrib;c++)
 		{
 			//Copia as informacoes
 			trainingattrib[r][c]=datas[r][c];
-			trainingattrib[r][c]=trainingattrib[r][c]/10000;
+			trainingattrib[r][c]=(trainingattrib[r][c]-small)/(big-small);
 			auxtraiat[c]=trainingattrib[r][c];
 		}
 		trainingclass[r]= datas[r][20];	//valor desejado de saida (0-5)
@@ -203,7 +227,7 @@ public class NNeuroph extends SigmoidDeltaRule {
         MomentumBackpropagation learningRule = (MomentumBackpropagation) neuralNet.getLearningRule();
         learningRule.setLearningRate(0.7);
         learningRule.setMomentum(0.7);
-        learningRule.setMaxIterations(3000000);
+        learningRule.setMaxIterations(1000000);
         learningRule.setMaxError(0.00001);
        
         
@@ -237,7 +261,7 @@ public class NNeuroph extends SigmoidDeltaRule {
     			{
     				//Copia as informacoes
     				trainingattribt[r][c]=datatest[r][c];
-    				trainingattribt[r][c]=trainingattribt[r][c]/10000;  //normalizar melhor que isso!!!
+    				trainingattribt[r][c]=(trainingattribt[r][c]-small)/(big-small);  //normalizar melhor que isso!!!
     				auxtraiatt[c]=trainingattribt[r][c];
     			}
     			trainingclasst[r]= datatest[r][20];	
