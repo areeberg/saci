@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-249"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/ImShow-Java-OpenCV-master/Imshow.jar"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/maven-plugin-api-3.0.3.jar/maven-plugin-api-3.0.3.jar"/>
@@ -25,6 +26,5 @@
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-ext-1.7.7.jar"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-jdk14-1.7.7-sources.jar"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-jdk14-1.7.7.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

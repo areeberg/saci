@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Vector;
 
 import org.neuroph.contrib.samples.stockmarket.TrainingData;
 import org.neuroph.core.*;
@@ -32,7 +33,9 @@ public class NNeuroph extends SigmoidDeltaRule {
 	final static int attrib = 20;
 	final static int classes = 6;
 	final static int input = training_samples*attrib;
-
+	final static MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 10 intermediarias e 6 saidas
+	static double big=0;
+	static double small=10;
 	
 	
 	//--------------------------------   /**
@@ -74,7 +77,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 	 return datas;
 	}
 	//--------------------------------------------------------------------------------------------------------------
-	static double[][] read_datasettest(String filename, double[][] datatest,  int total_samples) throws IOException
+	static double[][] read_datasettest(String filename, double[][] datatest,  int control) throws IOException
 	{
 
 	    //open the file
@@ -85,16 +88,16 @@ public class NNeuroph extends SigmoidDeltaRule {
 	    datatest = new double[1][attrib+1];  // 1 sample + num de atributos (20)
 	    String[] vetor = new String[attrib+1];
 	    
-	    for (int a = 0; a < 1; a++)  //1 = numero de imagens a serem testadas
-        { info = inputfile.readLine();
+	    for (int a = 0; a < control; a++)  
+        { info = inputfile.readLine();}
         
         //System.out.print(datas);
         
         vetor = info.split(",");
 
         for (int p = 0; p < vetor.length; p++) 
-        { datatest[a][p] = (double) Double.parseDouble(vetor[p]);}
-        }
+        { datatest[0][p] = (double) Double.parseDouble(vetor[p]);}
+        
 	    
 	    
 	 try {
@@ -108,10 +111,9 @@ public class NNeuroph extends SigmoidDeltaRule {
 	}
 	
 	
-	//--------------------------------------MAIN--------------
-	public static void main(String[] args) throws Exception {
+	public static void train() throws IOException{
 		System.loadLibrary("opencv_java249");
-
+		
 		double[][] datas = new double[training_samples][attrib+1];
 		datas = read_dataset("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt", datas, training_samples);
 		
@@ -134,8 +136,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 		
 		//find biggest and smaller value, adicionar margem de seguranca no biggest value
 		
-		double big=0;
-		double small=10;
+
 		double aux=0;
 		double aux2=110;
 		for (int r=0;r<training_samples;r++)
@@ -188,111 +189,125 @@ public class NNeuroph extends SigmoidDeltaRule {
 		System.out.print(dsTraining);
 		
 
-		/*
-		String trainingSetFileName = "/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt";
-        int inputsCount = 20;
-        int outputsCount = 6;
 
-        System.out.println("Running Sample");
-        System.out.println("Using training set " + trainingSetFileName);
-        
-        
-     // create training set
-        DataSet trainingSet = null;
-        try {
-            trainingSet = TrainingSetImport.importFromFile(trainingSetFileName, inputsCount, outputsCount, ",");
-        } catch (FileNotFoundException ex) {
-            System.out.println("File not found!");
-        } catch (IOException | NumberFormatException ex) {
-            System.out.println("Error reading file or bad number format!");
-        }
-        
-		//System.out.print(trainingSet);
-        */
-        
 		 // create multi layer perceptron
         System.out.println("Creating neural network");
-        MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 10 intermediarias e 6 saidas
+       // MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 10 intermediarias e 6 saidas
        
-  /*      
-        SupervisedLearning learningRule = (SupervisedLearning)neuralNet.getLearningRule();
-        learningRule.setMaxError(0.001);
-        learningRule.setMaxIterations(10000); // make sure we can end.
-        learningRule.addObserver(this); // user observer to tell when individual networks are done and launch new networks.
-        this._mlpVector.add(neuralNet);
-        neuralNet.learnInNewThread(trainingSet);
-   */
+
         
         // set learning parametars
         MomentumBackpropagation learningRule = (MomentumBackpropagation) neuralNet.getLearningRule();
         learningRule.setLearningRate(0.7);
         learningRule.setMomentum(0.7);
-        learningRule.setMaxIterations(1000000);
-        learningRule.setMaxError(0.00001);
+        learningRule.setMaxIterations(500000);
+        learningRule.setMaxError(0.000001);
        
         
         // learn the training set
         System.out.println("Training neural network...");
-        neuralNet.learn(dsTraining);   //trainingSet
+        //neuralNet.learn(dsTraining);   //trainingSet
+        neuralNet.learnInNewThread(dsTraining); 
         System.out.println("Done!");
-        
-        
-        double[][] datatest = new double[1][attrib+1];
-    	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", datatest, 1);
-    	//Cria o dataset de test
-    			String labeltest="goldenimages";
-    			String[] colunast = new String[20];
-    			colunast[0]="0";colunast[1]="1";colunast[2]="2";colunast[3]="3";colunast[4]="4";colunast[5]="5";colunast[6]="6";colunast[7]="7";colunast[8]="8";colunast[9]="9";
-    			colunast[10]="10";colunast[11]="11";colunast[12]="12";colunast[13]="13";colunast[14]="14";colunast[15]="15";colunast[16]="16";colunast[17]="17";colunast[18]="18";colunast[19]="19";
-    			DataSet dsTest = new DataSet(20, 1);
-    			dsTest.setLabel(labeltest);
-    			dsTest.setColumnNames(colunast);
-    			
-    			double[][] trainingattribt = new double[training_samples][attrib];
-    			double[] trainingclasst = new double[training_samples];
-    			double[] auxtraiatt=new double[attrib];
-    			double[] auxtraiclat = new double[1];
-    			
-
-    			
-    			for (int r=0;r<test_samples;r++)
-    			{	
-    			for (int c=0;c < attrib;c++)
-    			{
-    				//Copia as informacoes
-    				trainingattribt[r][c]=datatest[r][c];
-    				trainingattribt[r][c]=(trainingattribt[r][c]-small)/(big-small);  //normalizar melhor que isso!!!
-    				auxtraiatt[c]=trainingattribt[r][c];
-    			}
-    			trainingclasst[r]= datatest[r][20];	
-    			auxtraiclat[0]=trainingclasst[r];
-    			
-    			dsTest.addRow(new DataSetRow(trainingattribt[r],new double[] {0.4}));
-    			
-    			
-    			}//end 1for
-
-    			System.out.print(dsTest);
-    			System.out.println();
-    
-        // test perceptron
-        System.out.println("Testing neural network");
-        testClassification(neuralNet, dsTest);
-                
 	}
 	
-	public static void testClassification(NeuralNetwork nnet, DataSet dset) {
+	public static void classify(int control) throws IOException{
+		System.loadLibrary("opencv_java249");
+		  double[][] datatest = new double[1][attrib+1];
+	    	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", datatest, control);
+	    	//Cria o dataset de test
+	    			String labeltest="goldenimages";
+	    			String[] colunast = new String[20];
+	    			colunast[0]="0";colunast[1]="1";colunast[2]="2";colunast[3]="3";colunast[4]="4";colunast[5]="5";colunast[6]="6";colunast[7]="7";colunast[8]="8";colunast[9]="9";
+	    			colunast[10]="10";colunast[11]="11";colunast[12]="12";colunast[13]="13";colunast[14]="14";colunast[15]="15";colunast[16]="16";colunast[17]="17";colunast[18]="18";colunast[19]="19";
+	    			DataSet dsTest = new DataSet(20, 1);
+	    			dsTest.setLabel(labeltest);
+	    			dsTest.setColumnNames(colunast);
+	    			
+	    			double[][] trainingattribt = new double[training_samples][attrib];
+	    			double[] trainingclasst = new double[training_samples];
+	    			double[] auxtraiatt=new double[attrib];
+	    			double[] auxtraiclat = new double[1];
+	    			
+	    	
+	    			for (int r=0;r<test_samples;r++)
+	    			{	
+	    			for (int c=0;c < attrib;c++)
+	    			{
+	    				//Copia as informacoes
+	    				trainingattribt[r][c]=datatest[r][c];
+	    				trainingattribt[r][c]=(trainingattribt[r][c]-small)/(big-small);  
+	    				auxtraiatt[c]=trainingattribt[r][c];
+	    			}
+	    			trainingclasst[r]= datatest[r][20];	
+	    			auxtraiclat[0]=trainingclasst[r];
+	    			
+	    			dsTest.addRow(new DataSetRow(trainingattribt[r],new double[] {0.4}));
+	    			}//end 1for
+
+	    			System.out.print(dsTest);
+	    			System.out.println();
+	    
+	        // test perceptron
+	        System.out.println("Testing neural network");
+	        
+	       double answer=0; 
+	        answer =testClassification(neuralNet, dsTest);
+	        
+	        System.out.print(answer);
+	        
+	       float class1=0;
+	       float Capacitor=(float) 0.0;
+	       float ResistorSmall=(float) 0.2;
+	       float ResistorBig=(float) 0.4;
+	       float SchmittTrigger=(float) 0.6;
+	       float Transistor=(float) 0.8;
+	       float PowerTransistor=(float) 1.0;
+	       
+	       
+	       if (answer <= (Capacitor+0.05))
+	    	   System.out.println("Capacitor");
+	    	   
+	       if ((answer <= (ResistorSmall+0.05)) & (answer >= (ResistorSmall-0.05))  )
+	    	   System.out.println("Resistor Small");
+	    	 
+	       if ((answer <= (ResistorBig+0.05)) & (answer >= (ResistorBig-0.05))  )
+	    	   System.out.println("Resistor Big");
+
+	       if ((answer <= (SchmittTrigger+0.05)) & (answer >= (SchmittTrigger-0.05))  )
+	    	   System.out.println("Schmitt Trigger");
+	       
+	       if ((answer <= (Transistor+0.05)) & (answer >= (Transistor-0.05))  )
+	    	   System.out.println("Transistor");
+	
+	       if ( answer >= (PowerTransistor-0.05)  )
+	    	   System.out.println("PowerTransistor");
+	        
+	}
+	
+	public static double testClassification(NeuralNetwork nnet, DataSet dset) {
 
         for (DataSetRow testElement : dset.getRows()) {
 
             nnet.setInput(testElement.getInput());
             nnet.calculate();
             double[] networkOutput = nnet.getOutput();
+            
             System.out.print("Input: " + Arrays.toString(testElement.getInput()));
             System.out.println(" Output: " + Arrays.toString(networkOutput));
             System.out.println("Time stamp Final:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
+
+           
+           double answer=networkOutput[0];
+           
+           return answer;
+    
         }
+		return big;
 
     }
+	
+	
+	
 	
 }

@@ -26,6 +26,9 @@ import weka.core.Instances;
 import weka.core.Attribute;
 
 public class Knear {
+	
+	public  String texto="";
+	
 	public static BufferedReader readDataFile(String filename) {
 		BufferedReader inputReader = null;
  
@@ -37,7 +40,8 @@ public class Knear {
 	
 		return inputReader;
 	}
-	public static void main(String[] args) throws Exception {
+	
+	public  String KNN(int imagecode) throws Exception{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	
 		
@@ -49,8 +53,6 @@ public class Knear {
  
 	
 		 //-------------------------------------------------------------------------------------------------------------------------
-		
-		
 		
 		
 		//do not use first and second
@@ -74,7 +76,7 @@ public class Knear {
 		String[] vetor = new String[3];
 		double[] datas = new double[3];  //15 = training samples; 10 numero de caracteristicas
 		 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt"));
-		 for (int a = 0; a <= 6; a++)
+		 for (int a = 0; a <= (6+imagecode); a++)
          { info = inputfile.readLine(); }
 
 		    vetor = info.split(",");     
@@ -124,10 +126,12 @@ public class Knear {
 		case 4:tipoel="Transistor";break;
 		case 5:tipoel="PowerTransistor";break;
 		}
+	
+		//System.out.println("first: " + tipoel);
 		
-		
-		
-		System.out.println("first: " + tipoel);
-		
+		texto=eval.toMatrixString()+'\n'+eval.toClassDetailsString()+'\n'+"Type "+tipoel;
+		return (tipoel);
 	}
+	
+	
 }

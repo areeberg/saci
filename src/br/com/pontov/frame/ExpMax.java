@@ -51,36 +51,40 @@ public class ExpMax {
 		 
 		 //----------TEST
 
-		 Instance instance = new Instance(data.numAttributes());
-			instance.setDataset(data);
-		    instance.setValue(data.attribute(0), 100.0D);
-		    instance.setValue(data.attribute(1),7000.0D);
-		    instance.setValue(data.attribute(2), 27.0D);
-		    
-		    
-		    Instance instance2 = new Instance(data.numAttributes());
-			instance2.setDataset(data);
-		    instance2.setValue(data.attribute(0), 100.0D);
-		    instance2.setValue(data.attribute(1), 8000.0D);
-		    instance2.setValue(data.attribute(2), 16.0D);
-		   
-		    
+		 String info = "";
+			String[] vetor = new String[3];
+			double[] datas = new double[3];  //15 = training samples; 10 numero de caracteristicas
+			 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt"));
+			 for (int a = 0; a <= 6; a++)
+	         { info = inputfile.readLine(); }
+
+			    vetor = info.split(",");     
+		        for (int p = 0; p < vetor.length-1; p++) 
+		        { datas[p] =  Double.parseDouble(vetor[p]);}
+	        
+		        
+		        int atrib1,atrib2,atrib3;
+		        
+		        atrib1=(int) datas[0];
+		        atrib2=(int) datas[1];
+		        atrib3=(int) datas[2];
 			
-		    Instance instance3 = new Instance(data.numAttributes());
-			instance3.setDataset(data);
-		    instance3.setValue(data.attribute(0), 100.0D);
-		    instance3.setValue(data.attribute(1), 1500.0D);
-		    instance3.setValue(data.attribute(2), 8.0D);
+			//---
+			
+			Instance instance = new Instance(data.numAttributes());
+			instance.setDataset(data);
+		    instance.setValue(data.attribute(0), atrib1);
+		    instance.setValue(data.attribute(1), atrib2);
+		    instance.setValue(data.attribute(2), atrib3);
 		    
 		    
 		    ClassificationViaClustering cvc = new ClassificationViaClustering();
 		    cvc.setClusterer(clusterer);
 		    cvc.buildClassifier(data);
 		    double class1 = cvc.classifyInstance(instance);
-			double class2 = cvc.classifyInstance(instance2);
-			double class3 = cvc.classifyInstance(instance3);
+
 		
-		 System.out.println("first: " + class1 + "\nsecond: " + class2 + "\nthird: "+ class3);
+		 System.out.println("first: " + class1 );
 		 
 		 System.out.println(eval.clusterResultsToString());
 		

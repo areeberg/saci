@@ -77,6 +77,9 @@ import java.nio.file.*;
 
 public class main extends JPanel {
 	
+	
+	
+	
    
     private static final int CV_LOAD_IMAGE_GRAYSCALE = 0;
 	private static final boolean DEBUG_GRAPHICS_LOADED = false;
@@ -88,6 +91,11 @@ public class main extends JPanel {
 
 	@SuppressWarnings("unchecked")
 	public static <PVector, Contour> void main(String[] args) throws IOException, AWTException {
+		
+		
+		
+		
+		/*
         System.loadLibrary("opencv_java249");
   
         //CRIAR UM FOR PARA PREENCHER TODOS OS ARR[X], VERIFICAR A EXISTENCIA ANTES
@@ -343,11 +351,11 @@ public class main extends JPanel {
 		
 		
 		System.out.printf("FIM");
-		
+		*/	
 	}
 
 	
-	
+
 	
 }
 
