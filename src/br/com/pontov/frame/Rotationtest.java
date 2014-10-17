@@ -28,9 +28,9 @@ import org.opencv.imgproc.Imgproc;
 
 
 
-public class Croptest  {
+public class Rotationtest  {
 	private Caractest arrtest;
-	public Croptest(Caractest arrtest){
+	public Rotationtest(Caractest arrtest){
 	this.arrtest=arrtest;
 }
 	private Carac arr;
@@ -67,17 +67,38 @@ public class Croptest  {
          c3=datas[6];
          c4=datas[7];
 		 
-			int w = (int) (c1-c3); 
-	   		int h = (int) (c2-c4);
-	   	    w = Math.abs(w); 
-	   	    h = Math.abs(h);
+			
 
 		    Mat imgfinal = Highgui.imread(arrtest.getURL(),Highgui.CV_LOAD_IMAGE_GRAYSCALE);
-		    Rect ret = new Rect((int)c1,(int)c2-30,w,h+15);
-		   
+		    
+		    double x1,x2,y1,y2;
+		    x1=c1;
+		    y1=c2;
+		    x2=c3;
+		    y2=c4;
+		    
+		    
+		    x1=((x1*Math.cos(Math.toDegrees(90)))-(y1*Math.sin(Math.toDegrees(90))));
+		    y1=((x1*Math.sin(Math.toDegrees(90)))+(y1*Math.cos(Math.toDegrees(90))));
+		    x2=((x2*Math.cos(Math.toDegrees(90)))-(y2*Math.sin(Math.toDegrees(90))));
+		    y2=((x2*Math.sin(Math.toDegrees(90)))+(y2*Math.cos(Math.toDegrees(90))));
+		    int w = (int) (x1-x2); 
+	   		int h = (int) (y1-y2);
+	   	    w = Math.abs(w); 
+	   	    h = Math.abs(h);
+		    
+		   Rect ret = new Rect((int)c1,(int)c2-30,w,h+15);
+		  
+		  // Rectangle rect = new Rectangle();
+		    //rect.setFrameFromDiagonal(x1, y1, x2, y2);
+		    
+		    
+		    
 		    cropped = new Mat(imgfinal,ret); 
 		    Highgui.imwrite(arrtest.getURL2(), cropped);
 		    //notify();
+		    
+		    
 		 
 		    System.out.println('\n'+"Cropped image saved successfully.");
 		   

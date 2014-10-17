@@ -1,6 +1,7 @@
 package br.com.pontov.frame;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 
 public class Carac {
@@ -22,8 +23,9 @@ public class Carac {
 	private int c3;
 	private int c4;
 	private double[] descri;
+	private Point centro;
 	
-	public Carac (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, int c1, int c2, int c3, int c4,double[] descri)
+	public Carac (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, int c1, int c2, int c3, int c4,double[] descri,Point centro)
 	{
 		this.URL = URL;
 		this.URL2 = URL2;
@@ -43,6 +45,7 @@ public class Carac {
 	    this.c3=c3;
 	    this.c4=c4;
 	    this.descri=descri;
+	    this.centro=centro;
 	}
 	public Carac()
 	{}
@@ -102,6 +105,9 @@ public class Carac {
 	public double[]getDescri(){
 		return descri;
 	}
+	public Point getCentro(){
+		return centro;
+	}
 	
 	//--------SETTER
 	public void setName(String URL){
@@ -157,5 +163,8 @@ public class Carac {
 	}
 	public void setDescri(double[] descri){
 		this.descri=descri;
+	}
+	public void setCentro(Point centro){
+		this.centro=centro;
 	}
 }

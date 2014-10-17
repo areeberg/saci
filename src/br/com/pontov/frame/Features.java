@@ -35,9 +35,7 @@ public class Features {
 	        Mat goldimgc = Highgui.imread(arr.getURL2());
 	        
 	        //----------------WATERSHED
-	        
-	        
-	        
+
 	        Mat gray = new Mat(goldimgc.size(),CvType.CV_8UC3);
 
 	    	Imgproc.cvtColor(goldimgc, gray, Imgproc.COLOR_RGB2GRAY);
@@ -224,12 +222,17 @@ public class Features {
 	      //ELLIPSE FIT----------------------------------------------------------------------------------------           
 	        RotatedRect elip = Imgproc.fitEllipse(contour2f);
 	        
+	        
 	        //Desenhar a elipse
 	   //     Core.ellipse(drawing, elip, new Scalar(255,0,0));
 	        
-	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem
-	        
+	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem 
 	        arr.setAngle(angulo);
+	       Point centro=new Point();
+	        centro=elip.center;
+	        
+	        arr.setCentro(centro);
+	        
 	        
 	        } //end if
  //--------------VETORES E MOMENTO 2

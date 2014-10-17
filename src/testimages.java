@@ -91,7 +91,7 @@ public class testimages {
 		public static File fileconjc = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt");
 		public static File filefourier = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/filefourier.txt");
 		private static boolean head=false;
-		public  String texto="";
+	
 				
 		public void init(int click) throws IOException{
 
@@ -99,11 +99,14 @@ public class testimages {
 	    	   MyThreadftest t2t = new MyThreadftest(arrtest[click]);
 
 	       t1t.start();
+	    
+
 	        	try{
 	        		t1t.join();
+	        		
 	        	}catch(InterruptedException ie){
 	        		System.out.println("Erro durante o corte"); 
-	        		texto ="Erro durante o corte";
+	        		
 	        	}
 	        	t2t.start();
 	        try{
@@ -111,7 +114,7 @@ public class testimages {
 	    		t2t.join();
 	    	}catch(InterruptedException ie){
 	    		System.out.println("Erro ao extrair as caracteristicas");
-	    		texto="Erro ao extrair as caracteristicas";
+
 	    		}
 
 	        //-------------
@@ -165,9 +168,7 @@ public class testimages {
 			bodyf="\n"+arrtest[click].getDescri()[0]+","+arrtest[click].getDescri()[1]+","+arrtest[click].getDescri()[2]+","+arrtest[click].getDescri()[3]+","+arrtest[click].getDescri()[4]+","+arrtest[click].getDescri()[5]+","+arrtest[click].getDescri()[6]+","+arrtest[click].getDescri()[7]+","+arrtest[click].getDescri()[8]+","+arrtest[click].getDescri()[9]+","+arrtest[click].getDescri()[10]+","+arrtest[click].getDescri()[11]+","+arrtest[click].getDescri()[12]+","+arrtest[click].getDescri()[13]+","+arrtest[click].getDescri()[14]+","+arrtest[click].getDescri()[15]+","+arrtest[click].getDescri()[16]+","+arrtest[click].getDescri()[17]+","+arrtest[click].getDescri()[18]+","+arrtest[click].getDescri()[19]+"";		
 			outputfile.write(bodyf);
 			outputfile.close();
-		
-
-			texto="Imagem adquirida";
+			
 }
 		
 
@@ -177,7 +178,7 @@ public class testimages {
 
 		 String dir;
 	        int nfdir = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/TestImages").listFiles().length;
-	        
+	        System.out.println("Adquirindo imagem");
 		for (int i=0;i<nfdir+200;i++)  //nfdir = numero de arquivos gold
 	      {
 	    	  for (int k=0;k<nfdir+10;k++)

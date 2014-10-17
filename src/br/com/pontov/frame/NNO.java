@@ -133,7 +133,7 @@ public class NNO {
 
 	
 	//------------------READ THE TEST IMAGE
-	public static void readFiletest(int samplesPerClass,String outputfile ) throws IOException
+	public static void readFiletest(int samplesPerClass,String outputfile, int controle ) throws IOException
 	{
 		File file = new File(outputfile);
 		PrintWriter outputfile2 = null;
@@ -175,14 +175,15 @@ public class NNO {
 		 numlinha=reader.getLineNumber();
 
 		 
-		 for (int a = 0; a <= 0; a++)
+		 for (int a = 0; a < controle; a++)	 
         { infdesc = inputfiledesc.readLine(); }
-		 for (int a = 0; a <= endLine; a++)
+		 
+		 for (int a = 0; a < controle; a++)
         { info = inputfile.readLine(); }
 		 
 		 
-		 for (int a=0;a<numlinhadesc-1;a++)
-		 {
+		// for (int a=0;a<numlinhadesc-1;a++)
+		// {
 			 infdesc = inputfiledesc.readLine();
 			 String[] vetor = new String[20];
 			 vetor = infdesc.split(",");     
@@ -227,7 +228,7 @@ public class NNO {
           
           System.out.print(datas);
           System.out.println(tipo);
-		 } //end for linhas
+		// } //end for linhas
           
 		 outputfile2.close();
 		  reader.close();

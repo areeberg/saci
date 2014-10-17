@@ -27,8 +27,9 @@ import weka.gui.beans.TrainingSetEvent;
 
 
 public class NNeuroph extends SigmoidDeltaRule {
+
 	//--------------------------------
-	final static int training_samples = 15;
+	final static int training_samples=3;
 	final static int test_samples=1;
 	final static int attrib = 20;
 	final static int classes = 6;
@@ -36,6 +37,9 @@ public class NNeuroph extends SigmoidDeltaRule {
 	final static MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 10 intermediarias e 6 saidas
 	static double big=0;
 	static double small=10;
+	public  String texto="";
+	final static double [] tclass=new double[training_samples];
+
 	
 	
 	//--------------------------------   /**
@@ -111,8 +115,9 @@ public class NNeuroph extends SigmoidDeltaRule {
 	}
 	
 	
-	public static void train() throws IOException{
+	public void train() throws IOException{
 		System.loadLibrary("opencv_java249");
+		
 		
 		double[][] datas = new double[training_samples][attrib+1];
 		datas = read_dataset("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt", datas, training_samples);
@@ -151,11 +156,12 @@ public class NNeuroph extends SigmoidDeltaRule {
 			
 		}}
 		
-		big=big+1000;
+		big=big+2000;
 		
 		//System.out.print(big);
 		System.out.print(small);
 		System.out.println();
+		
 		
 		for (int r=0;r<training_samples;r++)
 		{	
@@ -180,20 +186,15 @@ public class NNeuroph extends SigmoidDeltaRule {
 		case 5:desiredout=1;break;
 		}
 		 //auxtraicla[r]= desiredout;
-
 		
+		tclass[r]=desiredout;
 		dsTraining.addRow(new DataSetRow(trainingattrib[r],new double[]{desiredout}));
 		
 		}//end 1for
-
-		System.out.print(dsTraining);
-		
-
-
 		 // create multi layer perceptron
-        System.out.println("Creating neural network");
+        //System.out.println("Creating neural network");
        // MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 10 intermediarias e 6 saidas
-       
+       texto="Creating neural network";
 
         
         // set learning parametars
@@ -205,13 +206,15 @@ public class NNeuroph extends SigmoidDeltaRule {
        
         
         // learn the training set
-        System.out.println("Training neural network...");
+       // System.out.println("Training neural network...");
+        texto='\n'+"Training neural Network";
         //neuralNet.learn(dsTraining);   //trainingSet
         neuralNet.learnInNewThread(dsTraining); 
+        texto='\n'+"Done!";
         System.out.println("Done!");
 	}
 	
-	public static void classify(int control) throws IOException{
+	public void classify(int control) throws IOException{
 		System.loadLibrary("opencv_java249");
 		  double[][] datatest = new double[1][attrib+1];
 	    	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", datatest, control);
@@ -228,7 +231,10 @@ public class NNeuroph extends SigmoidDeltaRule {
 	    			double[] trainingclasst = new double[training_samples];
 	    			double[] auxtraiatt=new double[attrib];
 	    			double[] auxtraiclat = new double[1];
+	    			double desout=0.0;
 	    			
+	    			double des=datatest[0][20]; //tem que ser o valor desejado
+	    	    	System.out.println();
 	    	
 	    			for (int r=0;r<test_samples;r++)
 	    			{	
@@ -240,9 +246,12 @@ public class NNeuroph extends SigmoidDeltaRule {
 	    				auxtraiatt[c]=trainingattribt[r][c];
 	    			}
 	    			trainingclasst[r]= datatest[r][20];	
-	    			auxtraiclat[0]=trainingclasst[r];
+	    			auxtraiclat[0]=trainingclasst[r];	
 	    			
 	    			dsTest.addRow(new DataSetRow(trainingattribt[r],new double[] {0.4}));
+	    			desout=tclass[control-1];
+	    					dsTest.addRow(new DataSetRow(trainingattribt[r],new double[] {desout}));		
+	    					
 	    			}//end 1for
 
 	    			System.out.print(dsTest);
@@ -252,40 +261,18 @@ public class NNeuroph extends SigmoidDeltaRule {
 	        System.out.println("Testing neural network");
 	        
 	       double answer=0; 
-	        answer =testClassification(neuralNet, dsTest);
+	       double desiredanswer=0;
+	       
+	      // desiredanswer=dsTest
+	        answer = testClassification(neuralNet, dsTest);
 	        
 	        System.out.print(answer);
-	        
-	       float class1=0;
-	       float Capacitor=(float) 0.0;
-	       float ResistorSmall=(float) 0.2;
-	       float ResistorBig=(float) 0.4;
-	       float SchmittTrigger=(float) 0.6;
-	       float Transistor=(float) 0.8;
-	       float PowerTransistor=(float) 1.0;
-	       
-	       
-	       if (answer <= (Capacitor+0.05))
-	    	   System.out.println("Capacitor");
-	    	   
-	       if ((answer <= (ResistorSmall+0.05)) & (answer >= (ResistorSmall-0.05))  )
-	    	   System.out.println("Resistor Small");
-	    	 
-	       if ((answer <= (ResistorBig+0.05)) & (answer >= (ResistorBig-0.05))  )
-	    	   System.out.println("Resistor Big");
-
-	       if ((answer <= (SchmittTrigger+0.05)) & (answer >= (SchmittTrigger-0.05))  )
-	    	   System.out.println("Schmitt Trigger");
-	       
-	       if ((answer <= (Transistor+0.05)) & (answer >= (Transistor-0.05))  )
-	    	   System.out.println("Transistor");
-	
-	       if ( answer >= (PowerTransistor-0.05)  )
-	    	   System.out.println("PowerTransistor");
+	       // analisys(answer,desout);
+	      
 	        
 	}
 	
-	public static double testClassification(NeuralNetwork nnet, DataSet dset) {
+	public double testClassification(NeuralNetwork nnet, DataSet dset) {
 
         for (DataSetRow testElement : dset.getRows()) {
 
@@ -299,14 +286,12 @@ public class NNeuroph extends SigmoidDeltaRule {
 
            
            double answer=networkOutput[0];
-           
+           texto=" Output: " + Arrays.toString(networkOutput);
            return answer;
-    
         }
 		return big;
-
+		
     }
-	
 	
 	
 	

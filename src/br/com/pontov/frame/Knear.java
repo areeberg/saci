@@ -44,8 +44,6 @@ public class Knear {
 	public  String KNN(int imagecode) throws Exception{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	
-		
-		
 		BufferedReader datafile = readDataFile("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info3.txt");
 		 
 		Instances data = new Instances(datafile);
@@ -56,9 +54,9 @@ public class Knear {
 		
 		
 		//do not use first and second
-		Instance first = data.instance(1);
-		Instance second = data.instance(2);
-		Instance third = data.instance(3);
+		//Instance first = data.instance(1);
+		//Instance second = data.instance(2);
+		//Instance third = data.instance(3);
 		
 		//data.delete(1);
 		//data.delete(2);
@@ -130,6 +128,7 @@ public class Knear {
 		//System.out.println("first: " + tipoel);
 		
 		texto=eval.toMatrixString()+'\n'+eval.toClassDetailsString()+'\n'+"Type "+tipoel;
+		System.out.println(texto);
 		return (tipoel);
 	}
 	

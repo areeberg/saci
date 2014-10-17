@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,18 +11,31 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
+import br.com.pontov.frame.Crop;
 import br.com.pontov.frame.Knear;
 import br.com.pontov.frame.NNO;
 import br.com.pontov.frame.NNeuroph;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.SwingWorker;
+
 import java.awt.Color;
 
 
@@ -32,17 +46,21 @@ public class controlpanel extends JFrame {
 	public static String uplog="Log Info";
 	private int cont=1;
 	private int click=1;
-	private int knncontrol=0;
+	private int knncontrol=1;
 	private int nncontrol=0;
+	private int  nfdir;
 	private testimages ti= new testimages();
 	private Knear kn = new Knear();
+	private NNeuroph nh = new NNeuroph();
+	private static Dialog gd;
+	
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		
-		
+	
+	
+	public static void main(String[] args) throws IOException {
 		
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -66,28 +84,24 @@ public class controlpanel extends JFrame {
 	public controlpanel() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 700, 500);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(238, 238, 238));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JTextArea txtrExample = new JTextArea();
-		txtrExample.setBounds(5, 203, 439, 69);
-		contentPane.add(txtrExample);
+		nfdir = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/GoldenImages").listFiles().length;
+		nfdir=nfdir-1;
+	
 		
 		
 		
 		JButton btnGetGoldenImages = new JButton("Get Golden Images");
 		btnGetGoldenImages.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					goldenimages.start();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				//goldenimages.start();
+				gold.callgold();
 			}
 		});
 		btnGetGoldenImages.setBounds(5, 5, 162, 69);
@@ -101,7 +115,6 @@ public class controlpanel extends JFrame {
 					
 					cont=ti.start();
 					
-					
 					if(click<=cont)
 					{
 					ti.init(click);
@@ -109,7 +122,6 @@ public class controlpanel extends JFrame {
 					click++;
 					knncontrol++;
 					nncontrol++;
-					txtrExample.setText(ti.texto);
 					}
 					else
 					{
@@ -122,10 +134,10 @@ public class controlpanel extends JFrame {
 				}
 			}
 		});
-		btnGetTestImage.setBounds(5, 86, 162, 69);
+		btnGetTestImage.setBounds(5, 143, 162, 69);
 		contentPane.add(btnGetTestImage);
 		
-		JButton btnCreateNnInput = new JButton("Create NN input");
+		JButton btnCreateNnInput = new JButton("Create/Update NN input");
 		btnCreateNnInput.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -135,7 +147,7 @@ public class controlpanel extends JFrame {
 				Mat images = new Mat();
 				
 				String dir;
-				 int nfdir = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/GoldenImages").listFiles().length;
+				
 				 
 			    for (int i=0;i<nfdir+200;i++)
 			      {
@@ -157,8 +169,7 @@ public class controlpanel extends JFrame {
 
 			    try {
 					NNO.readFile(15,"/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt");
-					NNO.readFiletest(1,"/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt"); 
-				
+					NNO.readFiletest(1,"/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt",nncontrol); 
 					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -171,7 +182,7 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnCreateNnInput.setBounds(173, 71, 145, 29);
+		btnCreateNnInput.setBounds(232, 73, 196, 29);
 		contentPane.add(btnCreateNnInput);
 		
 		JButton btnKnnTrain = new JButton("KNN Analysis");
@@ -181,7 +192,7 @@ public class controlpanel extends JFrame {
 				try {
 				String ans="";
 					ans=kn.KNN(knncontrol-1);
-					txtrExample.setText(kn.texto);
+			
 					//escrever no log a resposta
 					
 				} catch (Exception e1) {
@@ -191,7 +202,7 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnKnnTrain.setBounds(327, 5, 117, 29);
+		btnKnnTrain.setBounds(481, 5, 117, 29);
 		contentPane.add(btnKnnTrain);
 		
 		JButton btnTrainNn = new JButton("Train NN");
@@ -199,7 +210,9 @@ public class controlpanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//train NN
 				try {
-					NNeuroph.train();
+					
+					nh.train();
+			
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -207,14 +220,15 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnTrainNn.setBounds(183, 95, 117, 29);
+		btnTrainNn.setBounds(274, 102, 117, 29);
 		contentPane.add(btnTrainNn);
 		
 		JButton btnNnClassify = new JButton("NN classify");
 		btnNnClassify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					NNeuroph.classify(nncontrol);
+					nh.classify(nncontrol);
+				
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -222,10 +236,14 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnNnClassify.setBounds(193, 129, 117, 29);
+		btnNnClassify.setBounds(481, 58, 117, 29);
 		contentPane.add(btnNnClassify);
 		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(6, 320, 552, 152);
+		contentPane.add(textArea);
 		
+	
 	
 		
 	}

@@ -1,5 +1,6 @@
 package br.com.pontov.frame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -32,7 +33,7 @@ public class Crop extends JFrame implements MouseListener, MouseMotionListener {
 	int drag_status=0,c1,c2,c3,c4;
 	Mat cropped=null;
 	boolean go=false;
-	class ImagePanel extends JPanel {
+	public class ImagePanel extends JPanel {
 
 		  private Image img;
 
@@ -47,7 +48,7 @@ public class Crop extends JFrame implements MouseListener, MouseMotionListener {
 		    setMinimumSize(size);
 		    setMaximumSize(size);
 		    setSize(size);
-		    setLayout(null);
+		    //setLayout(null);
 		  }
 		  public void paintComponent(Graphics g) {
 			    g.drawImage(img, 0, 0, null);
@@ -59,15 +60,18 @@ public class Crop extends JFrame implements MouseListener, MouseMotionListener {
 	{
 		
 		ImagePanel im=new ImagePanel(arr.getURL()); //Esta variável vai ter que buscar as goldimages
-		add(im);
+		getContentPane().add(im);
+		//add(im);
 		//setSize(640,480);
+		im.setBackground(Color.black);
+		im.setOpaque(true);
 		setSize(im.getSize());
 		setVisible(true);
 		addMouseListener(this);
 		addMouseMotionListener( this ); 
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
-		while(go==false)
-			wait();
+		//while(go==false)
+	//		wait();
 		
 	}
 	public synchronized void draggedScreen()throws Exception
