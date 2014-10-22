@@ -24,8 +24,11 @@ public class Carac {
 	private int c4;
 	private double[] descri;
 	private Point centro;
+	private float centrox;
+	private float centroy;
 	
-	public Carac (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, int c1, int c2, int c3, int c4,double[] descri,Point centro)
+	
+	public Carac (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, int c1, int c2, int c3, int c4,double[] descri,Point centro,float centrox, float centroy)
 	{
 		this.URL = URL;
 		this.URL2 = URL2;
@@ -46,6 +49,8 @@ public class Carac {
 	    this.c4=c4;
 	    this.descri=descri;
 	    this.centro=centro;
+	    this.centrox=centrox;
+	    this.centroy=centroy;
 	}
 	public Carac()
 	{}
@@ -108,6 +113,12 @@ public class Carac {
 	public Point getCentro(){
 		return centro;
 	}
+	public float getCentrox(){
+		return centrox;
+	}
+	public float getCentroy(){
+		return centroy;
+	}
 	
 	//--------SETTER
 	public void setName(String URL){
@@ -166,5 +177,11 @@ public class Carac {
 	}
 	public void setCentro(Point centro){
 		this.centro=centro;
+	}
+	public void setCentrox(float centrox){
+		this.centrox=centrox;
+	}
+	public void setCentroy(float centroy){
+		this.centroy=centroy;
 	}
 }

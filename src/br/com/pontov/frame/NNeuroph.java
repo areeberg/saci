@@ -28,8 +28,9 @@ import weka.gui.beans.TrainingSetEvent;
 
 public class NNeuroph extends SigmoidDeltaRule {
 
+	
 	//--------------------------------
-	final static int training_samples=3;
+	final static int training_samples=16;
 	final static int test_samples=1;
 	final static int attrib = 20;
 	final static int classes = 6;
@@ -199,8 +200,8 @@ public class NNeuroph extends SigmoidDeltaRule {
         
         // set learning parametars
         MomentumBackpropagation learningRule = (MomentumBackpropagation) neuralNet.getLearningRule();
-        learningRule.setLearningRate(0.7);
-        learningRule.setMomentum(0.7);
+        learningRule.setLearningRate(0.4);
+        learningRule.setMomentum(0.9);
         learningRule.setMaxIterations(500000);
         learningRule.setMaxError(0.000001);
        
@@ -267,8 +268,17 @@ public class NNeuroph extends SigmoidDeltaRule {
 	        answer = testClassification(neuralNet, dsTest);
 	        
 	        System.out.print(answer);
-	       // analisys(answer,desout);
-	      
+	     
+
+	   	
+	        String finalans = new Analysis().componenttype(answer);
+	        		//new Analysis().checkcomponent(control,answer, desout);
+	      float angle =  new Analysis().checkrotation(control);
+	       double distance = new Analysis().checkshift(control);
+	        boolean[] check = new Analysis().checkfullstatus(control, angle, distance, answer, desout);
+	        new Analysis().report(control, desout, finalans, angle, distance, check);
+	       
+	     
 	        
 	}
 	
@@ -280,13 +290,13 @@ public class NNeuroph extends SigmoidDeltaRule {
             nnet.calculate();
             double[] networkOutput = nnet.getOutput();
             
-            System.out.print("Input: " + Arrays.toString(testElement.getInput()));
+           // System.out.print("Input: " + Arrays.toString(testElement.getInput()));
             System.out.println(" Output: " + Arrays.toString(networkOutput));
             System.out.println("Time stamp Final:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
 
            
            double answer=networkOutput[0];
-           texto=" Output: " + Arrays.toString(networkOutput);
+           System.out.println("Answer: "+networkOutput);
            return answer;
         }
 		return big;

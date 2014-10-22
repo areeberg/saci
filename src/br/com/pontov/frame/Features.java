@@ -37,10 +37,11 @@ public class Features {
 	        //----------------WATERSHED
 
 	        Mat gray = new Mat(goldimgc.size(),CvType.CV_8UC3);
+	    	
 
 	    	Imgproc.cvtColor(goldimgc, gray, Imgproc.COLOR_RGB2GRAY);
 
-	    	
+	   
 	    	Imgproc.threshold(gray, gray, 100, 255, Imgproc.THRESH_BINARY_INV + Imgproc.THRESH_OTSU);
 	    	
 	 
@@ -221,17 +222,14 @@ public class Features {
 
 	      //ELLIPSE FIT----------------------------------------------------------------------------------------           
 	        RotatedRect elip = Imgproc.fitEllipse(contour2f);
-	        
-	        
+
 	        //Desenhar a elipse
 	   //     Core.ellipse(drawing, elip, new Scalar(255,0,0));
 	        
 	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem 
 	        arr.setAngle(angulo);
-	       Point centro=new Point();
-	        centro=elip.center;
-	        
-	        arr.setCentro(centro);
+	      
+	       
 	        
 	        
 	        } //end if
@@ -281,8 +279,14 @@ public class Features {
 	   //     Core.ellipse(drawing, elip, new Scalar(255,0,0));
 	        
 	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem
-	        
 	        arr.setAngle(angulo);
+		       Point centro=new Point();
+		        centro=elip.center;	
+		        float pontox = (float) centro.x;
+		        float pontoy = (float) centro.y;
+		        arr.setCentrox(pontox);
+		        arr.setCentroy(pontoy);
+		        arr.setCentro(centro);
 	        
 	        }
 	        

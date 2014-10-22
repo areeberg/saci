@@ -1,6 +1,7 @@
 package br.com.pontov.frame;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 
 public class Caractest {
@@ -17,10 +18,14 @@ public class Caractest {
 	private double numBins;
 	private double pct2pk;
 	private double bimodalap;
-	private double[] descri;  //criar descritores
+	private double[] descri;  
+	private Point centro;
+	private float centrox;
+	private float centroy;
 	
 	
-	public Caractest (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, double [] descri)
+	
+	public Caractest (String URL,String URL2,String URL3, int code,double contour,float elongation,float angle,Rect box,double[] histo,String type,double numBins, double pct2pk, double bimodalap, double [] descri, Point centro,float centrox, float centroy)
 	{
 		this.URL = URL;
 		this.URL2 = URL2;
@@ -36,6 +41,9 @@ public class Caractest {
 	    this.pct2pk=pct2pk;
 	    this.bimodalap=bimodalap;
 	    this.descri=descri;
+	    this.centro=centro;
+	    this.centrox=centrox;
+	    this.centroy=centroy;
 	}
 	public Caractest()
 	{}
@@ -83,6 +91,16 @@ public class Caractest {
 	public double[] getDescri(){
 		return descri;
 	}
+	public Point getCentro(){
+		return centro;
+	}
+	public float getCentrox(){
+		return centrox;
+	}
+	public float getCentroy(){
+		return centroy;
+	}
+	
 	//--------SETTER
 	public void setName(String URL){
 		this.URL=URL;
@@ -125,5 +143,14 @@ public class Caractest {
 	}
 	public void setDescri(double[] descri){
 		this.descri=descri;
+	}
+	public void setCentro(Point centro){
+		this.centro=centro;
+	}
+	public void setCentrox(float centrox){
+		this.centrox=centrox;
+	}
+	public void setCentroy(float centroy){
+		this.centroy=centroy;
 	}
 }

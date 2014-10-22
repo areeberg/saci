@@ -284,8 +284,13 @@ public class Featurestest {
 	   //     Core.ellipse(drawing, elip, new Scalar(255,0,0));
 	        
 	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem
-	        
 	        arrtest.setAngle(angulo);
+	        Point centro=new Point();
+	        centro=elip.center;		        
+	        arrtest.setCentro(centro);
+	        arrtest.setCentrox((float)centro.x);
+	        arrtest.setCentroy((float)centro.y);
+	        
 	        
 	        }
 	        
