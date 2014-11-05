@@ -66,7 +66,7 @@ public String componenttype(double answer){
 					 
 					 String[] vetor = new String[3];
 					 vetor = anglestring.split(",");     
-				        for (int p = 0; p < (vetor.length-1); p++)   //-1 devido ao ultimo ser uma string (tipo)
+				        for (int p = 0; p < 3; p++)   //-1 devido ao ultimo ser uma string (tipo)
 				        { datas[p] =  Double.parseDouble(vetor[p]);} 
 				 }
 				 return datas;
@@ -86,25 +86,28 @@ public String componenttype(double answer){
 		return angleteste;
 	}
 	
-	public double checkshift(int code) throws IOException{
+	public double[] checkshift(int code) throws IOException{
 		 double[] infofromgold=new double[3];
 		 double[] infofromtest=new double[3];
 		 infofromgold=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt",code);
 		 infofromtest=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fileinfo.txt",code);
 		
-		double distance=0;
-		distance= Math.sqrt(Math.pow((infofromgold[1]-infofromtest[1]), 2)+Math.pow((infofromgold[2]-infofromtest[2]), 2));
+		double []distance=new double[2];
 		
-		if (distance > 150)
-			System.out.println("-> Image shifted: "+ distance);
+		distance[0]= Math.sqrt(Math.pow((infofromtest[1]), 2)+Math.pow((infofromtest[2]), 2));
+		distance[1]= Math.sqrt(Math.pow((infofromgold[1]), 2)+Math.pow((infofromgold[2]), 2));
+		
+		
+		if (Math.abs(distance[0]-distance[1]) > 5)
+			System.out.println("-> Image shifted: "+ Math.abs(distance[0]-distance[1]) );
 		else
-			System.out.println("-> No shifiting");
+			System.out.println("-> No shifiting: "+ Math.abs(distance[0]-distance[1]) );
 		
-		System.out.println("-> Distance between centers: "+distance);
+		System.out.println("-> Distance between centers: "+Math.abs(distance[0]-distance[1]));
 		return distance;
 	}
 	
-	public double[] checkfullstatus(int code,float angleteste,double distance,double answer, double desout, String compo) throws IOException{
+	public double[] checkfullstatus(int code,float angleteste,double[] distance,double answer, double desout, String compo) throws IOException{
 		double[] check= new double[4];
 		
 		double[] infofromgold=new double[2];
@@ -126,7 +129,7 @@ public String componenttype(double answer){
 			 else
 				 check[2]=0.0;
 
-			 if (distance<200)
+			 if (Math.abs(distance[0]-distance[1])<5)
 				 check[3]=1.0;
 			 else
 				 check[3]=0.0;
@@ -146,7 +149,7 @@ public String componenttype(double answer){
 		
 	}
 	
-	public void report(int code,double desout,String finalanswer, float angletest,double distance,double[] check) throws IOException{
+	public void report(int code,double desout,String finalanswer, float angletest,double[] distance,double[] check) throws IOException{
 		boolean head=false;
 		File testreport = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/AgentInfo/testreport.txt");
 		PrintWriter arqdesaida = null;
@@ -158,7 +161,7 @@ public String componenttype(double answer){
 		float angle = (float)infofromgold[0];
 
 		String body="";	
-		body="\n"+code+","+des+","+finalanswer+","+angle+","+angletest+","+distance+","+check[0]+","+check[1]+","+check[2]+"";
+		body="\n"+code+","+des+","+finalanswer+","+angle+","+angletest+","+Math.abs(distance[0]-distance[1])+","+check[0]+","+check[1]+","+check[2]+"";
 		
 		
 		arqdesaida.write(body);

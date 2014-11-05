@@ -266,7 +266,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 	        String finalans = new Analysis().componenttype(answer);
 	        		//new Analysis().checkcomponent(control,answer, desout);
 	      float angle =  new Analysis().checkrotation(control);
-	       double distance = new Analysis().checkshift(control);
+	       double[] distance = new Analysis().checkshift(control);
 	        
 	        String compo="";
 			try {
