@@ -35,12 +35,12 @@ public class NNeuroph extends SigmoidDeltaRule {
 	final static int attrib = 20;
 	final static int classes = 6;
 	final static int input = training_samples*attrib;
-	final static MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 10 intermediarias e 6 saidas
+	final static MultiLayerPerceptron neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID ,20, 30, 1);  //20 entradas, 30 intermediarias e 6 saidas
 	static double big=0;
 	static double small=10;
 	public  String texto="";
 	final static double [] tclass=new double[training_samples];
-
+	double[] check = new double[4];
 	
 	
 	//--------------------------------   /**
@@ -90,13 +90,11 @@ public class NNeuroph extends SigmoidDeltaRule {
 	   
 	    String info = "";
 	 
-	    datatest = new double[1][attrib+1];  // 1 sample + num de atributos (20)
+	    datatest = new double[30][attrib+1];  // 1 sample + num de atributos (20)
 	    String[] vetor = new String[attrib+1];
 	    
 	    for (int a = 0; a < control; a++)  
         { info = inputfile.readLine();}
-        
-        //System.out.print(datas);
         
         vetor = info.split(",");
 
@@ -160,8 +158,8 @@ public class NNeuroph extends SigmoidDeltaRule {
 		big=big+2000;
 		
 		//System.out.print(big);
-		System.out.print(small);
-		System.out.println();
+		//System.out.print(small);
+		//System.out.println();
 		
 		
 		for (int r=0;r<training_samples;r++)
@@ -202,8 +200,8 @@ public class NNeuroph extends SigmoidDeltaRule {
         MomentumBackpropagation learningRule = (MomentumBackpropagation) neuralNet.getLearningRule();
         learningRule.setLearningRate(0.4);
         learningRule.setMomentum(0.9);
-        learningRule.setMaxIterations(500000);
-        learningRule.setMaxError(0.000001);
+        learningRule.setMaxIterations(50000);
+        learningRule.setMaxError(0.0001);//0.000001
        
         
         // learn the training set
@@ -211,14 +209,13 @@ public class NNeuroph extends SigmoidDeltaRule {
         texto='\n'+"Training neural Network";
         //neuralNet.learn(dsTraining);   //trainingSet
         neuralNet.learnInNewThread(dsTraining); 
-        texto='\n'+"Done!";
-        System.out.println("Done!");
+        
 	}
 	
 	public void classify(int control) throws IOException{
 		System.loadLibrary("opencv_java249");
 		  double[][] datatest = new double[1][attrib+1];
-	    	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", datatest, control);
+	    	datatest = read_datasettest("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/trainingNNO2.txt", datatest, control);
 	    	//Cria o dataset de test
 	    			String labeltest="goldenimages";
 	    			String[] colunast = new String[20];
@@ -235,7 +232,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 	    			double desout=0.0;
 	    			
 	    			double des=datatest[0][20]; //tem que ser o valor desejado
-	    	    	System.out.println();
+	    	    	
 	    	
 	    			for (int r=0;r<test_samples;r++)
 	    			{	
@@ -255,31 +252,36 @@ public class NNeuroph extends SigmoidDeltaRule {
 	    					
 	    			}//end 1for
 
-	    			System.out.print(dsTest);
-	    			System.out.println();
+	    			
 	    
 	        // test perceptron
-	        System.out.println("Testing neural network");
+	        //System.out.println("Testing neural network");
 	        
 	       double answer=0; 
 	       double desiredanswer=0;
 	       
 	      // desiredanswer=dsTest
 	        answer = testClassification(neuralNet, dsTest);
-	        
-	        System.out.print(answer);
-	     
-
-	   	
+	        	
 	        String finalans = new Analysis().componenttype(answer);
 	        		//new Analysis().checkcomponent(control,answer, desout);
 	      float angle =  new Analysis().checkrotation(control);
 	       double distance = new Analysis().checkshift(control);
-	        boolean[] check = new Analysis().checkfullstatus(control, angle, distance, answer, desout);
-	        new Analysis().report(control, desout, finalans, angle, distance, check);
-	       
-	     
 	        
+	        String compo="";
+			try {
+				compo=new Knear().KNN(control);  //control -1
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        check = new Analysis().checkfullstatus(control, angle, distance, answer, desout,compo);
+	        System.out.println("MSG;"+check[0]+";"+check[1]+";"+check[2]+";"+check[3]+"#");
+			 
+	        new Analysis().report(control, desout, finalans, angle, distance, check);
+
+	 
 	}
 	
 	public double testClassification(NeuralNetwork nnet, DataSet dset) {
@@ -291,12 +293,11 @@ public class NNeuroph extends SigmoidDeltaRule {
             double[] networkOutput = nnet.getOutput();
             
            // System.out.print("Input: " + Arrays.toString(testElement.getInput()));
-            System.out.println(" Output: " + Arrays.toString(networkOutput));
             System.out.println("Time stamp Final:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
-
+            System.out.println(" Output: " + Arrays.toString(networkOutput));
            
            double answer=networkOutput[0];
-           System.out.println("Answer: "+networkOutput);
+          
            return answer;
         }
 		return big;

@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-ext-1.7.7.jar"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-jdk14-1.7.7-sources.jar"/>
 	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/slf4j-1.7.7/slf4j-jdk14-1.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/alexandrermello/Documents/commons-io-2.4/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

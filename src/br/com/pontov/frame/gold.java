@@ -6,16 +6,24 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JTextPane;
+
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 
 public class gold extends JDialog {
@@ -27,6 +35,8 @@ public class gold extends JDialog {
 	public static Carac[] arr= new Carac[200];
 	int controlcode=1;
 	static int nfdir;
+	private JTextField txtXx;
+	private int goldimg=0;
 	/**
 	 * Launch the application.
 	 */
@@ -65,6 +75,7 @@ public class gold extends JDialog {
 		}
 	}
 
+	
 	/**
 	 * Create the dialog.
 	 */
@@ -78,25 +89,32 @@ public class gold extends JDialog {
 		//texto de informacao
 		String qtd = "";
 		qtd.valueOf(nfdir);
-		JTextPane txtpnP = new JTextPane();
-		txtpnP.setText(qtd);
-		txtpnP.setBounds(256, 35, 138, 42);
-		contentPanel.add(txtpnP);
 		
-	//	if(controlcode<nfdir)
-		//TEM QUE SER O WHILE, PARA SE CRIAR OS BOTOES
 		
-			
+		goldimg=Count.countgoldimages();
+		txtXx = new JTextField();
+		txtXx.setText(""+goldimg);
+		txtXx.setBounds(131, 57, 134, 28);
+		contentPanel.add(txtXx);
+		txtXx.setColumns(10);
+		contentPanel.setVisible(true);	
+		
+		//-----TEXTAREA---------------
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(6, 99, 388, 73);
+		contentPanel.add(textArea);
 		
 		contentPanel.setLayout(null);
 		{
 			JButton okButton = new JButton("Crop");
-			okButton.setBounds(27, 22, 75, 29);
+			okButton.setBounds(6, 22, 75, 29);
 			contentPanel.add(okButton);
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
 						new Crop(arr[controlcode]).start();
+						textArea.setText("-> Image cropped successfully");
+						
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -107,14 +125,17 @@ public class gold extends JDialog {
 		}
 		{
 			JButton cancelButton = new JButton("Process");
-			cancelButton.setBounds(136, 22, 92, 29);
+			cancelButton.setBounds(138, 22, 92, 29);
 			contentPanel.add(cancelButton);
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//ACTIONS FROM MYTHREADF
+					textArea.setText("-> Processing the image");
 					 new Features(arr[controlcode]).findContour();
 				  	  new Autocrop(arr[controlcode]).start(arr[controlcode].getBox());
 				      new Histogram(arr[controlcode]).start();
+				      textArea.setText("-> Features acquired");
+	
 				}
 			});
 			cancelButton.setActionCommand("Cancel");
@@ -123,17 +144,22 @@ public class gold extends JDialog {
 		JButton btnFinish = new JButton("Next/Finish");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				goldimg=Count.countgoldimages();
+				goldimg=goldimg-controlcode;
+				txtXx.setText(""+goldimg);
 				controlcode++;
-				System.out.println("Next Image");
+				textArea.setText("-> Next image");
 				
 			}
 		});
-		btnFinish.setBounds(6, 63, 117, 29);
+		btnFinish.setBounds(277, 22, 117, 29);
 		contentPanel.add(btnFinish);
 		{
 			JButton btnSaveInfo = new JButton("Save Info");
 			btnSaveInfo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
 					File fileg = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info.txt");
 				       
 					// if file doesnt exists, then create it
@@ -161,7 +187,7 @@ public class gold extends JDialog {
 					{
 					content += "\n"+arr[i].getCode()+","+arr[i].getContour()+","+arr[i].getElongation()+","+arr[i].getAngle()+","+arr[i].getC1()+","+arr[i].getC2()+","+arr[i].getC3()+","+arr[i].getC4()+","+arr[i].getType()+"";		
 					}
-					System.out.print(content);
+					//System.out.print(content);
 					try {
 						bw.write(content);
 						bw.close();
@@ -197,7 +223,7 @@ public class gold extends JDialog {
 					{
 					content2 += "\n"+arr[i].getAngle()+","+arr[i].getCentrox()+","+arr[i].getCentroy()+","+arr[i].getType()+"";		 //Angulo, tipo, centroid, 
 					}
-					System.out.print(content2);
+					//System.out.print(content2);
 					try {
 						bw2.write(content2);
 						bw2.close();
@@ -236,7 +262,7 @@ public class gold extends JDialog {
 					content3 += "\n"+arr[i].getNumbins()+","+arr[i].getPct2pk()+","+arr[i].getBimodalap()+","+arr[i].getType()+"";		
 					//content3 += "\n"+arr[i].getNumbins()+","+arr[i].getPct2pk()+","+arr[i].getBimodalap()+"";
 					}
-					System.out.print(content3);
+					//System.out.print(content3);
 					try {
 						bw3.write(content3);
 						bw3.close();
@@ -274,7 +300,7 @@ public class gold extends JDialog {
 					{
 					content4 +="\n"+arr[i].getDescri()[0]+","+arr[i].getDescri()[1]+","+arr[i].getDescri()[2]+","+arr[i].getDescri()[3]+","+arr[i].getDescri()[4]+","+arr[i].getDescri()[5]+","+arr[i].getDescri()[6]+","+arr[i].getDescri()[7]+","+arr[i].getDescri()[8]+","+arr[i].getDescri()[9]+","+arr[i].getDescri()[10]+","+arr[i].getDescri()[11]+","+arr[i].getDescri()[12]+","+arr[i].getDescri()[13]+","+arr[i].getDescri()[14]+","+arr[i].getDescri()[15]+","+arr[i].getDescri()[16]+","+arr[i].getDescri()[17]+","+arr[i].getDescri()[18]+","+arr[i].getDescri()[19]+""; 
 					}
-					System.out.print(content4);
+					//System.out.print(content4);
 					try {
 						bw4.write(content4);
 						bw4.close();
@@ -282,11 +308,64 @@ public class gold extends JDialog {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					
+					//---------------------------------------------------------------------------------
+					File fileg5 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infoKNN.txt");
+				       
+					// if file doesnt exists, then create it
+					if (!fileg5.exists()) {
+						try {
+							fileg5.createNewFile();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					FileWriter fw5 = null;
+					try {
+						fw5 = new FileWriter(fileg5.getAbsoluteFile());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					BufferedWriter bw5 = new BufferedWriter(fw5);
+					String content5 = new String();
+					
+					// "Capacitor", "ResistorSmall","ResistorBig", "Schmitt trigger","Transistor","PowerTransistor"
+					content5 = "@relation ComponentHistogram\n@attribute numBins real\n@attribute pct2pk real\n@attribute absdiff real\n@attribute type {Component,Background}\n@data";
+					
+					for (int i=1;i<controlcode;i++)  //numero de arquivos salvos para treinamento
+					{
+						content5 += "\n"+arr[i].getNumbins()+","+arr[i].getPct2pk()+","+arr[i].getBimodalap()+",Component";		
+					}
+					//System.out.print(content5);
+					
+					try {
+						bw5.write(content5);
+						bw5.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					textArea.setText("-> Informations saved");
+					System.out.println("All GOLDEN features and images were saved properly");
 					}// end if filegi exists
 				}
 			);
-			btnSaveInfo.setBounds(127, 63, 117, 29);
+			btnSaveInfo.setBounds(277, 58, 117, 29);
 			contentPanel.add(btnSaveInfo);
+			
+			
+		}
+		{
+			
+			
+			
+			JLabel lblImagesRemaining = new JLabel("Images remaining:");
+			lblImagesRemaining.setBounds(6, 63, 117, 16);
+			contentPanel.add(lblImagesRemaining);
+			
+		
 		}
 		
 		

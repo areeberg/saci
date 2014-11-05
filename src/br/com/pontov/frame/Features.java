@@ -181,8 +181,7 @@ public class Features {
 	        	magd[i]= newVal;
 	        }
 	        arr.setDescri(magd);
-	      //  System.out.println();
-	        
+	    
 	    //--------------VETORES E MOMENTO 1
 	        
 	        if (key==false)

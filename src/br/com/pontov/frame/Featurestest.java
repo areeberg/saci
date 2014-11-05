@@ -77,9 +77,6 @@ public class Featurestest {
 	      */  
 	        //---------------------------------
 	        
-	        
-	        
-	        
 	        goldimagecorner=markers; //goldimagecropped
 	        
 	       // Imgproc.GaussianBlur(markers, markers, new Size(5,5), 2,2); //goldimagecropped

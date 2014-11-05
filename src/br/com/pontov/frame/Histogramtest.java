@@ -85,11 +85,11 @@ public class Histogramtest {
         //C.put(0, 0, temp);
         //b_hist.put(i, 0, buff);
         
-        //Pct0.5 - percent of the histogram bins with >0.5% of the pixels.
+        //Pct3 - percent of the histogram bins with >3% of the pixels.
         double numBins = 0.0;
         for (int i=0; i< temp.length; i++)
         {
-        	if (temp[i]>0.5)  //tentar com 3
+        	if (temp[i]>3)  //tentar com 3
         		numBins++;
         }
         numBins = numBins*100/256;   //256 corresponde ao width do histograma

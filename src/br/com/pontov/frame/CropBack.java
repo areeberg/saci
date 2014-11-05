@@ -25,10 +25,10 @@ import org.opencv.imgproc.Imgproc;
 
 
 
-public class Crop extends JFrame implements MouseListener, MouseMotionListener {
-	private Carac arr;
-	public Crop(Carac arr){
-	this.arr=arr;
+public class CropBack extends JFrame implements MouseListener, MouseMotionListener {
+	private CaracBack arrBack;
+	public CropBack(CaracBack arrBack){
+	this.arrBack=arrBack;
 }
 	int drag_status=0,c1,c2,c3,c4;
 	Mat cropped=null;
@@ -59,7 +59,7 @@ public class Crop extends JFrame implements MouseListener, MouseMotionListener {
 	public synchronized void start() throws InterruptedException
 	{
 		
-		ImagePanel im=new ImagePanel(arr.getURL()); //Esta variável vai ter que buscar as goldimages
+		ImagePanel im=new ImagePanel(arrBack.getURL()); //Esta variável vai ter que buscar as goldimages
 		getContentPane().add(im);
 		//add(im);
 		//setSize(640,480);
@@ -78,19 +78,19 @@ public class Crop extends JFrame implements MouseListener, MouseMotionListener {
 	{
 			int w = c1 - c3;
 	   		int h = c2 - c4;
-	   		arr.setC1(c1);
-	   		arr.setC2(c2);
-	   		arr.setC3(c3);
-	   		arr.setC4(c4);
+	   		arrBack.setC1(c1);
+	   		arrBack.setC2(c2);
+	   		arrBack.setC3(c3);
+	   		arrBack.setC4(c4);
 	   		
 	   	    w = Math.abs(w);
 	   	    h = Math.abs(h);
 
-		    Mat imgfinal = Highgui.imread(arr.getURL(),Highgui.CV_LOAD_IMAGE_GRAYSCALE);
+		    Mat imgfinal = Highgui.imread(arrBack.getURL(),Highgui.CV_LOAD_IMAGE_GRAYSCALE);
 		    Rect ret = new Rect(c1,c2-30,w,h+15);
 		   
 		    cropped = new Mat(imgfinal,ret); 
-		    Highgui.imwrite(arr.getURL2(), cropped);
+		    Highgui.imwrite(arrBack.getURL2(), cropped);
 		    notify();
 		 
 		    System.out.println("Cropped image saved successfully.");

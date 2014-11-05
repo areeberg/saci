@@ -8,10 +8,11 @@ public class MyThreadftest extends Thread{
 	
 	public void run()
 	{
-		System.out.println("Achando as caracteristicas");
+		System.out.println("-> Finding features");
 	  new Featurestest(arrtest).findContour();
   	  new Autocroptest(arrtest).start(arrtest.getBox());
       new Histogramtest(arrtest).start();
+      System.out.println("-> Features found");
 	}
 	
 }

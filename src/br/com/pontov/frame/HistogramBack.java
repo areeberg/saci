@@ -23,17 +23,17 @@ import com.atul.JavaOpenCV.Imshow;
 
 	
 
-public class Histogram {
-	private Carac arr;
-	public Histogram(Carac arr){
-	this.arr=arr;
+public class HistogramBack {
+	private CaracBack arrBack;
+	public HistogramBack(CaracBack arrBack){
+	this.arrBack=arrBack;
 }
 
 	
 
 	public void start()
 	{
-		Mat goldhist = Highgui.imread(arr.getURL3());
+		Mat goldhist = Highgui.imread(arrBack.getURL2());
         Mat src =  new Mat(goldhist.height(), goldhist.width(), CvType.CV_8UC2);
         Imgproc.cvtColor(goldhist, src, Imgproc.COLOR_RGB2GRAY);
         Vector<Mat> bgr_planes = new Vector<Mat>();                                                                                                                                                                                 
@@ -56,7 +56,7 @@ public class Histogram {
         
         
      
-     // Extract histogram bean counts values to an array, note CvHistogram stores counts as floats
+     // Extract histogram bean counts values to an arrBackay, note CvHistogram stores counts as floats
 
         for (int i = 1; i < 256; i++) {         
 
@@ -85,7 +85,7 @@ public class Histogram {
         //C.put(0, 0, temp);
         //b_hist.put(i, 0, buff);
         
-        //Pct3 - percent of the histogram bins with >0.5% of the pixels.
+        //Pct0.5 - percent of the histogram bins with >0.5% of the pixels.
         double numBins = 0.0;
         for (int i=0; i< temp.length; i++)
         {
@@ -93,7 +93,7 @@ public class Histogram {
         		numBins++;
         }
         numBins = numBins*100/256;   //256 corresponde ao width do histograma
-        arr.setNumBins(numBins);
+        arrBack.setNumBins(numBins);
       //  System.out.print(numBins);
         //------------------------------------------------------------------------
         
@@ -124,7 +124,7 @@ public class Histogram {
         for (int gl = lminima2; gl < rminima2; gl++) {
           pct2pk += temp[gl];
         }
-        arr.setPct2pk(pct2pk);
+        arrBack.setPct2pk(pct2pk);
        // System.out.print(pct2pk);
         //-------------------------------------------------------------------------
   
@@ -139,15 +139,15 @@ public class Histogram {
         	diffSteps++;
         }
         bimodalap = absdiff/diffSteps;
-        arr.setBimodalap(bimodalap);
+        arrBack.setBimodalap(bimodalap);
         //System.out.print(bimodalap);
         //-------------------------------------------------------------------------
         
         //System.out.print(temp);
-       // System.out.print(Arrays.toString(temp));
+       // System.out.print(arrBackays.toString(temp));
         
         //converte o histograma (double) em string
-       StringBuilder sb = new StringBuilder(Arrays.toString(temp));
+        StringBuilder sb = new StringBuilder(Arrays.toString(temp));
        sb.deleteCharAt(0);
        sb.deleteCharAt(sb.length()-1);
        String resultString = sb.toString();
@@ -155,8 +155,8 @@ public class Histogram {
        //System.out.print(resultString);
        
        
-        arr.setHisto(temp);
-       // arr.setType(resultString);
+        arrBack.setHisto(temp);
+       // arrBack.setType(resultString);
         
         
 	}

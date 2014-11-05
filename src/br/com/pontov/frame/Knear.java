@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -41,26 +42,35 @@ public class Knear {
 		return inputReader;
 	}
 	
+	public static void mergefiles() throws IOException{
+		
+		// Files to read
+		File file1 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infoKNN.txt");
+		File file2 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/background/info3back.txt");
+
+		// File to write
+		File file3 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/KNNFinal.txt");
+
+		// Read the file like string
+		String file1Str = FileUtils.readFileToString(file1);
+		String file2Str = FileUtils.readFileToString(file2);
+		file1Str=file1Str+"\n";
+		// Write the file
+		FileUtils.write(file3, file1Str);
+		FileUtils.write(file3, file2Str, true); // true for append
+		
+		
+	}
+		
 	public  String KNN(int imagecode) throws Exception{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	
-		BufferedReader datafile = readDataFile("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info3.txt");
+		
+		BufferedReader datafile = readDataFile("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/KNNfinal.txt");
 		 
 		Instances data = new Instances(datafile);
-		data.setClassIndex(data.numAttributes() - 1);
- 
-	
-		 //-------------------------------------------------------------------------------------------------------------------------
 		
-		
-		//do not use first and second
-		//Instance first = data.instance(1);
-		//Instance second = data.instance(2);
-		//Instance third = data.instance(3);
-		
-		//data.delete(1);
-		//data.delete(2);
- 
+		data.setClassIndex(data.numAttributes()-1);  //numAttributes() - 1
 		Classifier ibk = new IBk();		
 		ibk.buildClassifier(data);
 
@@ -73,16 +83,17 @@ public class Knear {
 		String info = "";
 		String[] vetor = new String[3];
 		double[] datas = new double[3];  //15 = training samples; 10 numero de caracteristicas
-		 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt"));
-		 for (int a = 0; a <= (6+imagecode); a++)
+		 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/infotest.txt"));
+		 
+		 for (int a = 0; a < (5+imagecode); a++)
          { info = inputfile.readLine(); }
 
 		    vetor = info.split(",");     
-	        for (int p = 0; p < vetor.length-1; p++) 
+	        for (int p = 0; p < vetor.length; p++) 
 	        { datas[p] =  Double.parseDouble(vetor[p]);}
         
 	        
-	        int atrib1,atrib2,atrib3;
+	        double atrib1,atrib2,atrib3;
 	        
 	        atrib1=(int) datas[0];
 	        atrib2=(int) datas[1];
@@ -108,8 +119,8 @@ public class Knear {
 		Random rand = new Random(1);
 		 Evaluation eval = new Evaluation(data);
 		 eval.crossValidateModel(ibk, data, 3, rand);
-		System.out.println(eval.toMatrixString());
-		System.out.println(eval.toClassDetailsString());
+		//System.out.println(eval.toMatrixString());
+		//System.out.println(eval.toClassDetailsString());
 		//System.out.print(distribution);
 		
 		
@@ -117,18 +128,14 @@ public class Knear {
 		
 		switch((int) class1)
 		{
-		case 0:tipoel="Capacitor";break;
-		case 1:tipoel="ResistorSmall";break;
-		case 2:tipoel="ResistorBig";break;
-		case 3:tipoel="Schmitt trigger";break;	
-		case 4:tipoel="Transistor";break;
-		case 5:tipoel="PowerTransistor";break;
+		case 0:tipoel="Component";break;
+		case 1:tipoel="Background";break;
 		}
 	
 		//System.out.println("first: " + tipoel);
 		
 		texto=eval.toMatrixString()+'\n'+eval.toClassDetailsString()+'\n'+"Type "+tipoel;
-		System.out.println(texto);
+		//System.out.println(texto);
 		return (tipoel);
 	}
 	

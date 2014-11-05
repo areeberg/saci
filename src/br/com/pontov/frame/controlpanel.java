@@ -1,7 +1,11 @@
 package br.com.pontov.frame;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +24,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
@@ -34,6 +39,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
 import java.awt.Color;
+import javax.swing.JScrollBar;
 
 
 public class controlpanel extends JFrame {
@@ -51,12 +57,33 @@ public class controlpanel extends JFrame {
 	private Knear kn = new Knear();
 	private NNeuroph nh = new NNeuroph();
 	private static Dialog gd;
+	private PrintStream standardOut;
+	private PrintStream standardErr;
+	private JTextField txtXx;
+	private JTextField txtXx_1;
 	
-
 	/**
 	 * Launch the application.
 	 */
 	
+	
+	//------------------------System.out to textArea----------------------------------------
+	public class CustomOutputStream extends OutputStream {
+	    private JTextArea textArea;
+	     
+	    public CustomOutputStream(JTextArea textArea) {
+	        this.textArea = textArea;
+	    }
+	     
+	    @Override
+	    public void write(int b) throws IOException {
+	        // redirects data to the text area
+	        textArea.append(String.valueOf((char)b));
+	        // scrolls the text area to the end of data
+	        textArea.setCaretPosition(textArea.getDocument().getLength());
+	    }
+	}
+	//--------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -66,6 +93,7 @@ public class controlpanel extends JFrame {
 				try {
 					controlpanel frame = new controlpanel();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -73,8 +101,6 @@ public class controlpanel extends JFrame {
 		});
 	}
 	
-	
-
 
 	/**
 	 * Create the frame.
@@ -103,9 +129,46 @@ public class controlpanel extends JFrame {
 		contentPane.setLayout(null);
 		nfdir = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/GoldenImages").listFiles().length;
 		nfdir=nfdir-1;
+		
+		
 	
-		
-		
+		//---------------------------------------SCROLLABLE TEXT AREA-------------------------------------------------
+				JTextArea textArea = new JTextArea();
+				textArea.setEditable(false);
+				textArea.setBounds(6, 320, 552, 152);
+				PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
+				// keeps reference of standard output stream
+		        standardOut = System.out;
+		        standardErr = System.err;
+		        // re-assigns standard output stream and error output stream
+		        System.setOut(printStream);
+		        System.setErr(printStream);
+		       
+				
+				JScrollPane scroll = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				scroll.setBounds(6, 320, 552, 152);
+				
+				contentPane.add(scroll);
+				contentPane.setVisible(true);
+				
+				System.out.println("Start ->");
+	     //----------------------------------------MEDIDORES-------------------------------------
+			int numimggold=0;
+			numimggold=Count.countimagesfromfile("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt");
+			
+			txtXx = new JTextField();
+			txtXx.setText(""+numimggold);
+			txtXx.setBounds(560, 5, 134, 28);
+			contentPane.add(txtXx);
+			txtXx.setColumns(10);
+			
+
+			
+			txtXx_1 = new JTextField();
+			txtXx_1.setText(""+numimggold);
+			txtXx_1.setBounds(560, 223, 134, 28);
+			contentPane.add(txtXx_1);
+			txtXx_1.setColumns(10);
 		//---------------------------------------------GET GOLDEN IMAGES-----------------------------------------------------
 		JButton btnGetGoldenImages = new JButton("Get Golden Images");
 		btnGetGoldenImages.addActionListener(new ActionListener() {
@@ -114,7 +177,7 @@ public class controlpanel extends JFrame {
 				gold.callgold();
 			}
 		});
-		btnGetGoldenImages.setBounds(5, 5, 162, 69);
+		btnGetGoldenImages.setBounds(8, 5, 177, 69);
 		contentPane.add(btnGetGoldenImages);
 		
 		//---------------------------------------------GET TEST IMAGE-----------------------------------------------------
@@ -122,8 +185,6 @@ public class controlpanel extends JFrame {
 		btnGetTestImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-		
-					
 					cont=ti.start();
 
 					
@@ -134,6 +195,11 @@ public class controlpanel extends JFrame {
 					click++;
 					knncontrol++;
 					nncontrol++;
+					
+					int numtest=0;
+					numtest=Count.counttestimages();
+					numtest=numtest-click+1;
+					txtXx_1.setText(""+numtest);
 					}
 					else
 					{
@@ -146,7 +212,7 @@ public class controlpanel extends JFrame {
 				}
 			}
 		});
-		btnGetTestImage.setBounds(5, 143, 162, 69);
+		btnGetTestImage.setBounds(8, 204, 177, 69);
 		contentPane.add(btnGetTestImage);
 		
 		//---------------------------------------------CREATE NN INPUT-----------------------------------------------------
@@ -183,6 +249,7 @@ public class controlpanel extends JFrame {
 			    try {
 					NNO.readFile(15,"/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO.txt");
 					//NNO.readFiletest(1,"/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt",nncontrol); 
+					Knear.mergefiles();
 					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -195,30 +262,8 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnCreateNnInput.setBounds(232, 73, 196, 29);
+		btnCreateNnInput.setBounds(182, 5, 196, 29);
 		contentPane.add(btnCreateNnInput);
-		
-		
-		//---------------------------------------------KNN ANALYSIS-----------------------------------------------------
-		JButton btnKnnTrain = new JButton("KNN Analysis");
-		btnKnnTrain.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//KNN TRAIN
-				try {
-				String ans="";
-					ans=kn.KNN(knncontrol-1);
-			
-					//escrever no log a resposta
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		btnKnnTrain.setBounds(481, 5, 117, 29);
-		contentPane.add(btnKnnTrain);
 		
 		//---------------------------------------------TRAIN NN-----------------------------------------------------
 		JButton btnTrainNn = new JButton("Train NN");
@@ -236,7 +281,7 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnTrainNn.setBounds(274, 102, 117, 29);
+		btnTrainNn.setBounds(226, 45, 117, 29);
 		contentPane.add(btnTrainNn);
 		
 		//---------------------------------------------NN CLASSIFY / ANALYSIS-----------------------------------------------------
@@ -255,12 +300,33 @@ public class controlpanel extends JFrame {
 				
 			}
 		});
-		btnNnClassify.setBounds(481, 58, 117, 29);
+		btnNnClassify.setBounds(226, 224, 117, 29);
 		contentPane.add(btnNnClassify);
+
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(6, 320, 552, 152);
-		contentPane.add(textArea);
+		//---------------------------------------------BACKGROUND-----------------------------------------------------
+		JButton btnGetBackgroundSamples = new JButton("Get Background Samples");
+		btnGetBackgroundSamples.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//programar aqui para adquirir background samples
+				Background.callbackground();
+			}
+		});
+		btnGetBackgroundSamples.setBounds(8, 77, 177, 84);
+		contentPane.add(btnGetBackgroundSamples);
+		
+		JLabel lblNumberOfGold = new JLabel("Number of gold images:");
+		lblNumberOfGold.setBounds(403, 10, 167, 16);
+		contentPane.add(lblNumberOfGold);
+		
+		JLabel lblTestImagesRemaining = new JLabel("Test images remaining:");
+		lblTestImagesRemaining.setBounds(403, 229, 167, 16);
+		contentPane.add(lblTestImagesRemaining);
+		
+		
+		
+	
+		
 		
 	
 	

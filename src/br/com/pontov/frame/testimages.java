@@ -74,14 +74,16 @@ public class testimages {
 		private static final boolean DEBUG_GRAPHICS_LOADED = false;
 		private static final Object[] MatOfPoint2f = null;
 		public static boolean control=false;
-		public static Carac[] arr= new Carac[200];
-		public static Caractest[] arrtest = new Caractest[200];
+		public static Carac[] arr= new Carac[10000];
+		public static Caractest[] arrtest = new Caractest[10000];
 		public static int code=1;
 		public static int codetest=1;
-		public static File filet2 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fourierdesctest.txt");
-		public static File fileconjc = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt");
+		public static File filet2 = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fourierdesctest.txt");
+		public static File fileconjc = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/infotest.txt");
 		public static File filefourier = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/filefourier.txt");
-		public static File fileinfo = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fileinfo.txt");
+		public static File fileinfo = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fileinfo.txt");
+		
+		
 		private static boolean head=false;
 	
 				
@@ -115,11 +117,15 @@ public class testimages {
 	    	PrintWriter outputfile2 = null;
 	    	PrintWriter outputfile3=null;
 
+
 			try {
 				
 				outputfile = new PrintWriter(new FileWriter(filet2, true));
 				outputfile2 = new PrintWriter(new FileWriter(fileconjc, true));
 				outputfile3 = new PrintWriter(new FileWriter(fileinfo,true));
+
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -135,23 +141,27 @@ public class testimages {
 			{
 				String header="";
 				String headerf="";
-				
-				header="@relation info3\n@attribute numBins real\n@attribute pct2pk real\n@attribute absdiff real\n@attribute type {Capacitor,ResistorSmall,ResistorBig,Schmitt trigger,Transistor,PowerTransistor}\n@data";
+		
+				header="@relation testhistogram\n@attribute numBins real\n@attribute pct2pk real\n@attribute absdiff real\n@data";
 				headerf="Descritores de Fourier para teste";
+		
+				
 				outputfile.write(headerf);
 				outputfile2.write(header);
+
+
 				head=true;
 			}
-						
+			//---------------------------------------------------------------------------------			
 			String body="";	
 			// "Capacitor", "ResistorSmall","ResistorBig", "Schmitt trigger","Transistor","PowerTransistor"
 			//content3 += "\n"+arr[i].getNumbins()+","+arr[i].getPct2pk()+","+arr[i].getBimodalap()+"";
-			body="\n"+arrtest[click].getNumbins()+","+arrtest[click].getPct2pk()+","+arrtest[click].getBimodalap()+","+arrtest[click].getType()+"";
+			body="\n"+arrtest[click].getNumbins()+","+arrtest[click].getPct2pk()+","+arrtest[click].getBimodalap()+"";
 			
 			
 			outputfile2.write(body);
 			outputfile2.close();	
-			//---------------------------------------------------------------------------------
+			//--------------------------------------------FOURIER DESCRIPTORS-------------------------------------
 	
 			// "Capacitor", "ResistorSmall","ResistorBig", "Schmitt trigger","Transistor","PowerTransistor"
 			String bodyf="";	
@@ -160,15 +170,18 @@ public class testimages {
 			bodyf="\n"+arrtest[click].getDescri()[0]+","+arrtest[click].getDescri()[1]+","+arrtest[click].getDescri()[2]+","+arrtest[click].getDescri()[3]+","+arrtest[click].getDescri()[4]+","+arrtest[click].getDescri()[5]+","+arrtest[click].getDescri()[6]+","+arrtest[click].getDescri()[7]+","+arrtest[click].getDescri()[8]+","+arrtest[click].getDescri()[9]+","+arrtest[click].getDescri()[10]+","+arrtest[click].getDescri()[11]+","+arrtest[click].getDescri()[12]+","+arrtest[click].getDescri()[13]+","+arrtest[click].getDescri()[14]+","+arrtest[click].getDescri()[15]+","+arrtest[click].getDescri()[16]+","+arrtest[click].getDescri()[17]+","+arrtest[click].getDescri()[18]+","+arrtest[click].getDescri()[19]+"";		
 			outputfile.write(bodyf);
 			outputfile.close();
-			//---------------------------------------------------------------------------------
+			//---------------------------------------------FILE INFO------------------------------------
 			String fileinfo="";
 			fileinfo="\n"+arrtest[click].getAngle()+","+arrtest[click].getCentrox()+","+arrtest[click].getCentroy()+"";
 			outputfile3.write(fileinfo);
 			outputfile3.close();
 			
-
-			NNO.readFiletest(1, "/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trainingNNO2.txt", code);
+			
+			
+			//--------------------------------------------TEST NNO2----------------------------------------------------
+			NNO.readFiletest(1, "/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/trainingNNO2.txt", code);
 			code++;
+			System.out.println("Features saved successfully");
 }
 		
 
@@ -178,7 +191,7 @@ public class testimages {
 
 		 String dir;
 	        int nfdir = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/TestImages").listFiles().length;
-	        System.out.println("Adquirindo imagem");
+	        //System.out.println("Acquiring Image");
 		for (int i=0;i<nfdir+200;i++)  //nfdir = numero de arquivos gold
 	      {
 	    	  for (int k=0;k<nfdir+50;k++)

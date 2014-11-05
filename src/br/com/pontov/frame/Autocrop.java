@@ -69,15 +69,15 @@ public class Autocrop {
 		    if (response == JOptionPane.NO_OPTION) {
 		    	//retirar foto, decrementar arr
 		    	
-		      System.out.println("No button clicked");
+		    
 		    } else if (response == JOptionPane.YES_OPTION) {
 		    	//mostrar foto + info 
 		    	 arr.setType(selection.toString());
-				 System.out.print(selection.toString());
-		      System.out.println("Yes button clicked");
+				 
+		     
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
 		    	
-		      System.out.println("JOptionPane closed");
+		      
 		    }
 		 
 		    

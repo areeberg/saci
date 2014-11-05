@@ -30,22 +30,22 @@ public String componenttype(double answer){
       String resp="";
 	
 	  if (answer <= (Capacitor+0.05))
-	  {  System.out.println("Capacitor"); resp="Capacitor";}
+	  {  System.out.println("-> Type: Capacitor"); resp="Capacitor";}
    	   
       if ((answer <= (ResistorSmall+0.05)) & (answer >= (ResistorSmall-0.05))  )
-   	   {System.out.println("Resistor Small");resp="Resistor Small";}
+   	   {System.out.println("-> Type: Resistor Small");resp="Resistor Small";}
    	 
       if ((answer <= (ResistorBig+0.05)) & (answer >= (ResistorBig-0.05))  )
-      { System.out.println("Resistor Big");resp="Resistor Big";}
+      { System.out.println("-> Type: Resistor Big");resp="Resistor Big";}
 
       if ((answer <= (SchmittTrigger+0.05)) & (answer >= (SchmittTrigger-0.05))  )
-      {   System.out.println("Schmitt Trigger");resp="Schmitt Trigger";}
+      {   System.out.println("-> Type: Schmitt Trigger");resp="Schmitt Trigger";}
       
       if ((answer <= (Transistor+0.05)) & (answer >= (Transistor-0.05))  )
-      {  System.out.println("Transistor");resp="Transistor";}
+      {  System.out.println("-> Type: Transistor");resp="Transistor";}
 
       if ( answer >= (PowerTransistor-0.05)  )
-      {  System.out.println("PowerTransistor");resp="PowerTransistor";}
+      {  System.out.println("-> Type: PowerTransistor");resp="PowerTransistor";}
       
       
       return resp;
@@ -79,7 +79,7 @@ public String componenttype(double answer){
 		
 		 double[] infofromtest=new double[3];
 		
-		 infofromtest=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fileinfo.txt",code);
+		 infofromtest=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fileinfo.txt",code);
 	
 		float angleteste=(float) infofromtest[0];
 
@@ -90,22 +90,22 @@ public String componenttype(double answer){
 		 double[] infofromgold=new double[3];
 		 double[] infofromtest=new double[3];
 		 infofromgold=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt",code);
-		 infofromtest=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fileinfo.txt",code);
+		 infofromtest=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fileinfo.txt",code);
 		
 		double distance=0;
 		distance= Math.sqrt(Math.pow((infofromgold[1]-infofromtest[1]), 2)+Math.pow((infofromgold[2]-infofromtest[2]), 2));
 		
-		if (distance > 50)
-			System.out.println("Deslocamento de imagem"+ distance);
+		if (distance > 150)
+			System.out.println("-> Image shifted: "+ distance);
 		else
-			System.out.println("Nao ha deslocamento");
+			System.out.println("-> No shifiting");
 		
-		System.out.println("Distancia entre os dois centros = "+distance);
+		System.out.println("-> Distance between centers: "+distance);
 		return distance;
 	}
 	
-	public boolean[] checkfullstatus(int code,float angleteste,double distance,double answer, double desout) throws IOException{
-		boolean[] check= new boolean[4];
+	public double[] checkfullstatus(int code,float angleteste,double distance,double answer, double desout, String compo) throws IOException{
+		double[] check= new double[4];
 		
 		double[] infofromgold=new double[2];
 		
@@ -113,32 +113,40 @@ public String componenttype(double answer){
 		 float angle = (float)infofromgold[0];
 		 
 		 
-		 
-		 if ((answer >= (desout-0.05)) & (answer <= (desout+0.05)))
-				check[0]=true;
-				 else
-					 check[0]=false;
-		 
-		 if ((angleteste>=(angle-10)) & angleteste<=(angle+10))
-		check[1]=true;
-		 else
-			 check[1]=false;
-		 
-		 if (distance<2000)
-			 check[2]=true;
-		 else
-			 check[2]=false;
-		
+		 if(compo=="Component")
+		 {
+			 check[0]=1.0;
+			 if ((answer >= (desout-0.05)) & (answer <= (desout+0.05)))
+				 check[1]=1.0;
+			 else
+				 check[1]=0.0;
 
+			 if ((angleteste>=(angle-10)) & angleteste<=(angle+10))
+				 check[2]=1.0;
+			 else
+				 check[2]=0.0;
+
+			 if (distance<200)
+				 check[3]=1.0;
+			 else
+				 check[3]=0.0;
+
+		 }
+		 else
+		 {
+			 check[0]=0.0;
+			 check[1]=0.0;
+			 check[2]=0.0;
+			 check[3]=0.0;
+		 }
 		
 		  
-		 
 		 return check;
 			
 		
 	}
 	
-	public void report(int code,double desout,String finalanswer, float angletest,double distance,boolean[] check) throws IOException{
+	public void report(int code,double desout,String finalanswer, float angletest,double distance,double[] check) throws IOException{
 		boolean head=false;
 		File testreport = new File("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/AgentInfo/testreport.txt");
 		PrintWriter arqdesaida = null;
@@ -148,8 +156,7 @@ public String componenttype(double answer){
 		double[] infofromgold=new double[3];
 		infofromgold=getinfo("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt",code);
 		float angle = (float)infofromgold[0];
-		
-		
+
 		String body="";	
 		body="\n"+code+","+des+","+finalanswer+","+angle+","+angletest+","+distance+","+check[0]+","+check[1]+","+check[2]+"";
 		

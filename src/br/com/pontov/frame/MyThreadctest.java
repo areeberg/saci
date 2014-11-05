@@ -11,7 +11,7 @@ public class MyThreadctest extends Thread{
 	
 	public void run()
 	{
-		System.out.println("Corte a imagem");
+		//System.out.println("Corte a imagem");
 		try {
 			new Croptest(arrtest).start();
 		} catch (InterruptedException e) {

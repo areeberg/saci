@@ -110,7 +110,7 @@ public class NNO {
                    if (info.contains("Transistor")){tipo = 4;}
                    if (info.contains("PowerTransistor")){tipo = 5;}
                    
-                   System.out.println(tipo);
+                   //System.out.println(tipo);
                    
                }
 
@@ -120,8 +120,8 @@ public class NNO {
 	 }
            endLine++;  
            
-           System.out.print(datas);
-           System.out.println(tipo);
+           //System.out.print(datas);
+           //System.out.println(tipo);
 		 } //end for linhas
            
 		 outputfile2.close();
@@ -155,11 +155,11 @@ public class NNO {
 		 int numlinha=0;
 		 String lin="";
 		 
-		 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt"));
-		 LineNumberReader reader  = new LineNumberReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/infotest.txt"));
+		 BufferedReader inputfile =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/infotest.txt"));
+		 LineNumberReader reader  = new LineNumberReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/infotest.txt"));
 	
-		 BufferedReader inputfiledesc =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fourierdesctest.txt"));
-		 LineNumberReader readerdesc  = new LineNumberReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/fourierdesctest.txt"));
+		 BufferedReader inputfiledesc =  new BufferedReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fourierdesctest.txt"));
+		 LineNumberReader readerdesc  = new LineNumberReader(new FileReader("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/TestImages/fourierdesctest.txt"));
 	
 		 //-------------READ THE FOURIER DESCRIPTORS
 		 
@@ -182,8 +182,8 @@ public class NNO {
         { info = inputfile.readLine(); }
 		 
 		 
-		// for (int a=0;a<numlinhadesc-1;a++)
-		// {
+	// for (int a=0;a<controle-1;a++)
+	//	{
 			 infdesc = inputfiledesc.readLine();
 			 String[] vetor = new String[20];
 			 vetor = infdesc.split(",");     
@@ -200,7 +200,7 @@ public class NNO {
 		//writing the label to file
         //{ "0 Capacitor", "1 ResistorSmall","2 ResistorBig", "3 Schmitt trigger","4 Transistor","5 PowerTransistor" }
 
-          if (endLine < (numlinha-1))
+          if (endlinedesc < (numlinhadesc))  //numlinha-1
           {
 
               for (int i = endLine; i == endLine; i++) {
@@ -216,7 +216,7 @@ public class NNO {
                   if (info.contains("Transistor")){tipo = 4;}
                   if (info.contains("PowerTransistor")){tipo = 5;}
                   
-                  System.out.println(tipo);
+                 // System.out.println(tipo);
                   
               }
 
@@ -226,9 +226,9 @@ public class NNO {
 	 }
           endLine++;  
           
-          System.out.print(datas);
-          System.out.println(tipo);
-		// } //end for linhas
+          //System.out.print(datas);
+          //System.out.println(tipo);
+	//	} //end for linhas
           
 		 outputfile2.close();
 		  reader.close();
