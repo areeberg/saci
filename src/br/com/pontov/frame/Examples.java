@@ -67,6 +67,8 @@ public class Examples {
        Imgproc.watershed(goldimgc, markers);
        Core.convertScaleAbs(markers, markers);
        
+ 	//Highgui.imwrite("/Users/alexandrermello/Documents/artigo mestrado visao/Artigo1/figuras/watershed.png", markers);
+
        
 //     Imshow ima3 = new Imshow("Opening");
 //     ima3.Window.setResizable(true);
