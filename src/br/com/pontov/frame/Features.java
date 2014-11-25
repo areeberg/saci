@@ -228,9 +228,6 @@ public class Features {
 	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem 
 	        arr.setAngle(angulo);
 	      
-	       
-	        
-	        
 	        } //end if
  //--------------VETORES E MOMENTO 2
 	        

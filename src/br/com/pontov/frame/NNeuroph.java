@@ -30,7 +30,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 
 	
 	//--------------------------------
-	final static int training_samples=16;
+	final static int training_samples=30;
 	final static int test_samples=1;
 	final static int attrib = 20;
 	final static int classes = 6;
@@ -201,7 +201,7 @@ public class NNeuroph extends SigmoidDeltaRule {
         learningRule.setLearningRate(0.4);
         learningRule.setMomentum(0.9);
         learningRule.setMaxIterations(50000);
-        learningRule.setMaxError(0.0001);//0.000001
+        learningRule.setMaxError(0.00001);//0.000001
        
         
         // learn the training set
@@ -277,7 +277,15 @@ public class NNeuroph extends SigmoidDeltaRule {
 			}
 	        
 	        check = new Analysis().checkfullstatus(control, angle, distance, answer, desout,compo);
-	        System.out.println("MSG;"+check[0]+";"+check[1]+";"+check[2]+";"+check[3]+"#");
+	        
+	        System.out.println("MSG;"+control+";"+check[0]+";"+check[1]+";"+check[2]+";"+check[3]+"#");
+	        ClientUDP.board();
+			 ClientUDP.send(control,check);
+			 
+			 if (control==30)
+			 {
+				 ClientUDP.finish();
+			 }
 			 
 	        new Analysis().report(control, desout, finalans, angle, distance, check);
 

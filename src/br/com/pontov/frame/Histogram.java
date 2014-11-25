@@ -85,7 +85,7 @@ public class Histogram {
         //C.put(0, 0, temp);
         //b_hist.put(i, 0, buff);
         
-        //Pct3 - percent of the histogram bins with >0.5% of the pixels.
+        //Pct3 - percent of the histogram bins with >3% of the pixels.
         double numBins = 0.0;
         for (int i=0; i< temp.length; i++)
         {

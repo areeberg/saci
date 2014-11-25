@@ -6,7 +6,9 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
+import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
@@ -67,12 +69,51 @@ public class Examples {
        Imgproc.watershed(goldimgc, markers);
        Core.convertScaleAbs(markers, markers);
        
+       
+
+       int thresh =1; 
+       double largest_contour=0;
+       int largest_contour_index=0;
+       
+       for (int  i=0;i<250;i++)
+       {
+       Imgproc.Canny(markers, markers, i,255); //goldimagecropped
+       
+       Imgproc.findContours(markers, contours, new Mat(), Imgproc.RETR_EXTERNAL+Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE);
+       //RETR_LIST
+    
+       }   
+       for( int x = 0; x<contours.size(); x++ ) // iterate through each contour.
+       {
+       
+		double a=Imgproc.contourArea(contours.get(x));   //  Find the area of contour
+		
+         
+           if(a>largest_contour){
+               largest_contour=a;						//SAIDA: MAIOR CONTORNO
+               largest_contour_index=x;                //Store the index of largest contour 
+           }
+       }
+       
+       
+       //ELLIPSE FIT----------------------------------------------------------------------------------------     
+       MatOfPoint2f contour2f = new MatOfPoint2f( contours.get(largest_contour_index).toArray() );
+       RotatedRect rectrot=null;
+       rectrot = Imgproc.minAreaRect(contour2f);
+       
+       RotatedRect elip = Imgproc.fitEllipse(contour2f);
+
+       //Desenhar a elipse
+       
+       Mat drawing = Mat.zeros(markers.size(), largest_contour_index);
+      Core.ellipse(drawing, elip, new Scalar(255,0,0));
+       
  	//Highgui.imwrite("/Users/alexandrermello/Documents/artigo mestrado visao/Artigo1/figuras/watershed.png", markers);
 
        
-//     Imshow ima3 = new Imshow("Opening");
-//     ima3.Window.setResizable(true);
-//     ima3.showImage(markers);
+     Imshow ima3 = new Imshow("Contour");
+     ima3.Window.setResizable(true);
+     ima3.showImage(drawing);
       
         
 	}
