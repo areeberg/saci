@@ -30,7 +30,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 
 	
 	//--------------------------------
-	final static int training_samples=30;
+	final static int training_samples=5;
 	final static int test_samples=1;
 	final static int attrib = 20;
 	final static int classes = 6;
@@ -41,6 +41,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 	public  String texto="";
 	final static double [] tclass=new double[training_samples];
 	double[] check = new double[4];
+	DataSet dsTraining = new DataSet(20, 1);
 	
 	
 	//--------------------------------   /**
@@ -126,7 +127,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 		String[] colunas = new String[20];
 		colunas[0]="0";colunas[1]="1";colunas[2]="2";colunas[3]="3";colunas[4]="4";colunas[5]="5";colunas[6]="6";colunas[7]="7";colunas[8]="8";colunas[9]="9";
 		colunas[10]="10";colunas[11]="11";colunas[12]="12";colunas[13]="13";colunas[14]="14";colunas[15]="15";colunas[16]="16";colunas[17]="17";colunas[18]="18";colunas[19]="19";
-		DataSet dsTraining = new DataSet(20, 1);
+		//DataSet dsTraining = new DataSet(20, 1);
 		dsTraining.setLabel(label);
 		dsTraining.setColumnNames(colunas);
 		
@@ -209,7 +210,20 @@ public class NNeuroph extends SigmoidDeltaRule {
         texto='\n'+"Training neural Network";
         //neuralNet.learn(dsTraining);   //trainingSet
         neuralNet.learnInNewThread(dsTraining); 
-        
+
+	}
+	
+	
+	public void save() {
+		System.loadLibrary("opencv_java249");
+        dsTraining.save("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trained.nnet");
+
+	}
+	
+	public void load() {
+		System.loadLibrary("opencv_java249");
+        dsTraining.load("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trained.nnet");
+
 	}
 	
 	public void classify(int control) throws IOException{
@@ -282,7 +296,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 	        ClientUDP.board();
 			 ClientUDP.send(control,check);
 			 
-			 if (control==30)
+			 if (control==5)
 			 {
 				 ClientUDP.finish();
 			 }

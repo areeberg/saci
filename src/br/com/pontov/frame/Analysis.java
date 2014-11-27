@@ -124,7 +124,8 @@ public String componenttype(double answer){
 			 else
 				 check[1]=0.0;
 
-			 if ((angleteste>=(angle-10)) & angleteste<=(angle+10))
+			// if ((angleteste>=(angle-20)) && angleteste<=(angle+20) || (angleteste<=(angle-20)) && angleteste>=(angle+20))
+			 if (angleteste==angle)
 				 check[2]=1.0;
 			 else
 				 check[2]=0.0;

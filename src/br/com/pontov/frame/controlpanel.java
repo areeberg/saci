@@ -86,7 +86,7 @@ public class controlpanel extends JFrame {
 	//--------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) throws IOException {
-		
+		 
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -154,7 +154,8 @@ public class controlpanel extends JFrame {
 				System.out.println("Start ->");
 	     //----------------------------------------MEDIDORES-------------------------------------
 			int numimggold=0;
-			numimggold=Count.countimagesfromfile("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt");
+			//numimggold=Count.countimagesfromfile("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/info2.txt");
+			numimggold = Count.countgoldimages();
 			
 			txtXx = new JTextField();
 			txtXx.setText(""+numimggold);
@@ -322,6 +323,30 @@ public class controlpanel extends JFrame {
 		JLabel lblTestImagesRemaining = new JLabel("Test images remaining:");
 		lblTestImagesRemaining.setBounds(403, 229, 167, 16);
 		contentPane.add(lblTestImagesRemaining);
+		
+		JButton btnSaveTraining = new JButton("Save training");
+		btnSaveTraining.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//CHAMAR FUNCAO DE SALVAR A REDE TREINADA
+				new NNeuroph().save();
+				System.out.println("Trained network saved!");
+			}
+		});
+		btnSaveTraining.setBounds(355, 46, 154, 29);
+		contentPane.add(btnSaveTraining);
+		
+		JButton btnLoadLastTraining = new JButton("Load training");
+		btnLoadLastTraining.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//CARREGAR A ULTIMA REDE TREINADA
+				new NNeuroph().load();
+				System.out.println("Trained network load!");
+			}
+		});
+		btnLoadLastTraining.setBounds(355, 77, 154, 29);
+		contentPane.add(btnLoadLastTraining);
 		
 		
 		
