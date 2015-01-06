@@ -96,6 +96,7 @@ public class Features {
 	        {
 	        Imgproc.Canny(markers, markers, i,255); //goldimagecropped
 	        
+	        
 	        Imgproc.findContours(markers, contours, new Mat(), Imgproc.RETR_EXTERNAL+Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE);
 	        //RETR_LIST
 	     

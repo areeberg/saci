@@ -292,13 +292,13 @@ public class NNeuroph extends SigmoidDeltaRule {
 	        
 	        check = new Analysis().checkfullstatus(control, angle, distance, answer, desout,compo);
 	        
-	        System.out.println("MSG;"+control+";"+check[0]+";"+check[1]+";"+check[2]+";"+check[3]+"#");
-	        ClientUDP.board();
-			 ClientUDP.send(control,check);
-			 
+	       // System.out.println("MSG;"+control+";"+check[0]+";"+check[1]+";"+check[2]+";"+check[3]+"#");
+	       // ClientUDP.board();
+			// ClientUDP.send(control,check);
+			// ClientUDP.receive();
 			 if (control==5)
 			 {
-				 ClientUDP.finish();
+				// ClientUDP.finish();
 			 }
 			 
 	        new Analysis().report(control, desout, finalans, angle, distance, check);

@@ -57,7 +57,7 @@ public class ClientUDP {
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); // montando pacote de recebimento
 
 			System.out.println ("Waiting for return packet");
-			clientSocket.setSoTimeout(10000); // timeout com o tempo de espera por uma resposta
+			clientSocket.setSoTimeout(2000); // timeout com o tempo de espera por uma resposta
 
 			try {
 				clientSocket.receive(receivePacket); // socket espera o recebimento do pacote
@@ -85,6 +85,55 @@ public class ClientUDP {
 			System.err.println(ex);
 		}
 	}
+	
+	
+	public static void receive(){
+
+		try {
+			// cria socket
+			DatagramSocket clientSocket = new DatagramSocket(); 
+
+			/* ================================================================================ */
+			DecimalFormat df = new DecimalFormat("0.0");
+			DecimalFormatSymbols dfs=new DecimalFormatSymbols();
+			dfs.setDecimalSeparator('.');
+			df.setDecimalFormatSymbols(dfs);
+
+			byte[] receiveData = new byte[1024]; // byte de recebimento
+			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); // montando pacote de recebimento
+
+			System.out.println ("Waiting for return packet");
+			clientSocket.setSoTimeout(10000); // timeout com o tempo de espera por uma resposta
+
+			try {	
+				System.out.println("OK");
+				clientSocket.receive(receivePacket); // socket espera o recebimento do pacote
+				System.out.println("COMECANDO A RECEBER A BAGACA");
+				String dataIn = new String(receivePacket.getData()); // armazenamento do conetúdo do pacote da mensagem recebida (msg modificada)
+				System.out.println("BAGACA RECEBIDA");
+				System.out.println("Message: " + dataIn); 
+				InetAddress returnIPAddress = receivePacket.getAddress(); // obtendo o endereço IP do pacote da mensagem recebida
+
+				int port = receivePacket.getPort(); // obtendo endereço da porta do pacote da mensagem
+
+				System.out.println ("From server at: " + returnIPAddress + ":" + port);
+				
+
+			} catch (SocketTimeoutException ste) {
+				System.out.println ("Timeout Occurred: Packet assumed lost");
+			}
+			/* ================================================================================ */
+			
+			clientSocket.close();
+			
+		} catch (UnknownHostException ex) { 
+			System.err.println(ex);
+		} catch (IOException ex) {
+			System.err.println(ex);
+		}
+	}
+		
+	
 		
 	public static void finish(){
 
@@ -261,14 +310,12 @@ public class ClientUDP {
 				InetAddress returnIPAddress = receivePacket.getAddress(); // obtendo o endereço IP do pacote da mensagem recebida
 
 				int port = receivePacket.getPort(); // obtendo endereço da porta do pacote da mensagem
-				
-				
 
 				System.out.println ("From server at: " + returnIPAddress + ":" + port);
-				System.out.println("Message: " + dataIn); 
+				System.out.println("######  Message: " + dataIn); 
 
 			} catch (SocketTimeoutException ste) {
-				System.out.println ("Timeout Occurred: Packet assumed lost");
+				//System.out.println ("Timeout Occurred: Packet assumed lost");
 			}
 			/* ================================================================================ */
 			

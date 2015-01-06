@@ -39,6 +39,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
 import java.awt.Color;
+
 import javax.swing.JScrollBar;
 
 
@@ -86,13 +87,18 @@ public class controlpanel extends JFrame {
 	//--------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) throws IOException {
-		 
+		
+		ServerUDP cludp = new ServerUDP();
+		cludp.start();
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					controlpanel frame = new controlpanel();
 					frame.setVisible(true);
+					
+					
+					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -347,7 +353,6 @@ public class controlpanel extends JFrame {
 		});
 		btnLoadLastTraining.setBounds(355, 77, 154, 29);
 		contentPane.add(btnLoadLastTraining);
-		
 		
 		
 	
