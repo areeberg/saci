@@ -46,6 +46,7 @@ import javax.swing.JScrollBar;
 public class controlpanel extends JFrame {
 
 
+	
 	private JPanel contentPane;
 	private String status=">_";
 	public static String uplog="Log Info";
@@ -62,6 +63,9 @@ public class controlpanel extends JFrame {
 	private PrintStream standardErr;
 	private JTextField txtXx;
 	private JTextField txtXx_1;
+	
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -88,8 +92,9 @@ public class controlpanel extends JFrame {
 	
 	public static void main(String[] args) throws IOException {
 		
-		ServerUDP cludp = new ServerUDP();
-		cludp.start();
+		//ServerUDP cludp = new ServerUDP();
+		//cludp.start();
+		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -137,7 +142,7 @@ public class controlpanel extends JFrame {
 		nfdir=nfdir-1;
 		
 		
-	
+		ComuInfo varonto = new ComuInfo();
 		//---------------------------------------SCROLLABLE TEXT AREA-------------------------------------------------
 				JTextArea textArea = new JTextArea();
 				textArea.setEditable(false);
@@ -272,6 +277,7 @@ public class controlpanel extends JFrame {
 		btnCreateNnInput.setBounds(182, 5, 196, 29);
 		contentPane.add(btnCreateNnInput);
 		
+		
 		//---------------------------------------------TRAIN NN-----------------------------------------------------
 		JButton btnTrainNn = new JButton("Train NN");
 		btnTrainNn.addActionListener(new ActionListener() {
@@ -279,6 +285,7 @@ public class controlpanel extends JFrame {
 				//train NN
 				try {
 					new NNeuroph().train();
+					varonto.training=false;
 					//nh.train();
 			
 				} catch (IOException e1) {

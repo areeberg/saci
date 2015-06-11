@@ -224,7 +224,7 @@ public class Features {
 	        RotatedRect elip = Imgproc.fitEllipse(contour2f);
 
 	        //Desenhar a elipse
-	   //     Core.ellipse(drawing, elip, new Scalar(255,0,0));
+	       Core.ellipse(drawing, elip, new Scalar(255,0,0));
 	        
 	        float angulo = (float) elip.angle; //SAIDA: angulo de rotação da imagem 
 	        arr.setAngle(angulo);

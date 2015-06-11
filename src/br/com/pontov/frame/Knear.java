@@ -119,6 +119,7 @@ public class Knear {
 		Random rand = new Random(1);
 		 Evaluation eval = new Evaluation(data);
 		 eval.crossValidateModel(ibk, data, 3, rand);
+		
 		//System.out.println(eval.toMatrixString());
 		//System.out.println(eval.toClassDetailsString());
 		//System.out.print(distribution);

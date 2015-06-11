@@ -28,7 +28,6 @@ import weka.gui.beans.TrainingSetEvent;
 
 public class NNeuroph extends SigmoidDeltaRule {
 
-	
 	//--------------------------------
 	final static int training_samples=5;
 	final static int test_samples=1;
@@ -45,8 +44,7 @@ public class NNeuroph extends SigmoidDeltaRule {
 	
 	
 	//--------------------------------   /**
-
-
+	ComuInfo varonto = new ComuInfo();
 
 	//--------------------------------
 	
@@ -209,14 +207,19 @@ public class NNeuroph extends SigmoidDeltaRule {
        // System.out.println("Training neural network...");
         texto='\n'+"Training neural Network";
         //neuralNet.learn(dsTraining);   //trainingSet
+        varonto.training=true;
         neuralNet.learnInNewThread(dsTraining); 
-
+        varonto.systrained=true; 
+	ServerUDP a = new ServerUDP();
+	a.sendmsg("teste");
 	}
 	
 	
 	public void save() {
 		System.loadLibrary("opencv_java249");
         dsTraining.save("/Users/alexandrermello/Documents/GoldenImages/PCB_ID15V0/InspectionImages/trained.nnet");
+        
+     
 
 	}
 	

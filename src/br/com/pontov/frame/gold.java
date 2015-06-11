@@ -20,8 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JTextPane;
-
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -37,6 +35,11 @@ public class gold extends JDialog {
 	static int nfdir;
 	private JTextField txtXx;
 	private int goldimg=0;
+	
+	//--------------------------------   /**
+	ComuInfo varonto = new ComuInfo();
+	//--------------------------------
+	
 	/**
 	 * Launch the application.
 	 */
@@ -124,6 +127,7 @@ public class gold extends JDialog {
 			getRootPane().setDefaultButton(okButton);
 		}
 		{
+			varonto.getgold=true;
 			JButton cancelButton = new JButton("Process");
 			cancelButton.setBounds(138, 22, 92, 29);
 			contentPanel.add(cancelButton);
@@ -349,6 +353,10 @@ public class gold extends JDialog {
 					}
 					textArea.setText("-> Informations saved");
 					System.out.println("All GOLDEN features and images were saved properly");
+					
+					varonto.goldok=true;
+					varonto.getgold=false;
+					
 					}// end if filegi exists
 				}
 			);

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="br.com.pontov.frame.ExpMax" x="1403" y="523">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Autocrop" x="212" y="59">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Count" x="1465" y="522">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.controlpanel.CustomOutputStream"
+        x="1144" y="450">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Croptest" x="536" y="393">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Crop" x="201" y="431">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Analysis" x="1142" y="560">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.NNO2" x="215" y="235">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+    </Class>
+    <Class name="br.com.pontov.frame.CrossValidation" x="1226" y="522">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="br.com.pontov.frame.NNeuroph"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Knear" x="898" y="347">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.testimages" x="532" y="255">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Histogram" x="202" y="349">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Histogramtest" x="884" y="21">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </Class>
+    <Class name="br.com.pontov.frame.CaracBack" x="1020" y="30">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Rotationtest" x="532" y="121">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Caractest" x="724" y="110">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Background" x="1201" y="229">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.CaracBack"
+            endpointName="arrBack" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.CaracBack"/>
+        <Communication destinationClassName="br.com.pontov.frame.Count"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Features" x="199" y="136">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </Class>
+    <Class name="br.com.pontov.frame.gold" x="396" y="663">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association destinationClassName="br.com.pontov.frame.ComuInfo"
+            endpointName="varonto" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+        <Communication destinationClassName="br.com.pontov.frame.Count"/>
+    </Class>
+    <Class name="br.com.pontov.frame.NNeuroph" x="694" y="529">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.ComuInfo"
+            endpointName="varonto" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.ServerUDP"/>
+        <Communication destinationClassName="br.com.pontov.frame.Knear"/>
+        <Communication destinationClassName="br.com.pontov.frame.Analysis"/>
+    </Class>
+    <Class name="br.com.pontov.frame.controlpanel" x="715" y="352">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.Knear"
+            endpointName="kn" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.testimages"
+            endpointName="ti" kind="Simple"/>
+        <Association destinationClassName="br.com.pontov.frame.NNeuroph"
+            endpointName="nh" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Count"/>
+    </Class>
+    <Class name="br.com.pontov.frame.CropBack.ImagePanel" x="1298" y="445">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.ServerUDP" x="994" y="669">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="br.com.pontov.frame.ComuInfo"
+            endpointName="varonto" kind="Simple"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Carac" x="388" y="93">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Autocroptest" x="622" y="22">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+    </Class>
+    <Class name="br.com.pontov.frame.HistogramBack" x="1148" y="357">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.CaracBack"
+            endpointName="arrBack" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.CaracBack"/>
+    </Class>
+    <Class name="br.com.pontov.frame.CropBack" x="1194" y="18">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.CaracBack"
+            endpointName="arrBack" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.CaracBack"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Confirm" x="1332" y="522">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="br.com.pontov.frame.Featurestest" x="882" y="89">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </Class>
+    <Class name="br.com.pontov.frame.ComuInfo" x="804" y="684">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+</ClassDiagram>

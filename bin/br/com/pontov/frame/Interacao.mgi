@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <CommunicationClass name="br.com.pontov.frame.Autocrop" x="778" y="54">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.ClientUDP" x="650" y="417"/>
+    <CommunicationClass name="br.com.pontov.frame.Count" x="374" y="176"/>
+    <CommunicationClass
+        name="br.com.pontov.frame.controlpanel.CustomOutputStream"
+        x="666" y="377"/>
+    <CommunicationClass name="br.com.pontov.frame.Croptest" x="301" y="562">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Crop" x="638" y="261">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Analysis" x="31" y="185"/>
+    <CommunicationClass name="br.com.pontov.frame.MyThreadctest" x="481" y="560">
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Croptest"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Crop.ImagePanel"
+        x="659" y="541"/>
+    <CommunicationClass name="br.com.pontov.frame.CrossValidation"
+        x="262" y="69">
+        <Communication destinationClassName="br.com.pontov.frame.NNeuroph"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Knear" x="38" y="5"/>
+    <CommunicationClass name="br.com.pontov.frame.testimages" x="129" y="532">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+        <Communication destinationClassName="br.com.pontov.frame.NNO"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Histogram" x="792" y="142">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Histogramtest" x="483" y="372">
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.CaracBack" x="161" y="389"/>
+    <CommunicationClass name="br.com.pontov.frame.Rotationtest" x="478" y="509">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Caractest" x="323" y="456"/>
+    <CommunicationClass name="br.com.pontov.frame.Background" x="159" y="209">
+        <Association
+            destinationClassName="br.com.pontov.frame.CaracBack"
+            endpointName="arrBack" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.CaracBack"/>
+        <Communication destinationClassName="br.com.pontov.frame.Count"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Features" x="509" y="72">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.gold" x="475" y="158">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+        <Association destinationClassName="br.com.pontov.frame.ComuInfo"
+            endpointName="varonto" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Carac"/>
+        <Communication destinationClassName="br.com.pontov.frame.Count"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.NNeuroph" x="25" y="64">
+        <Association destinationClassName="br.com.pontov.frame.ComuInfo"
+            endpointName="varonto" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.ServerUDP"/>
+        <Communication destinationClassName="br.com.pontov.frame.Knear"/>
+        <Communication destinationClassName="br.com.pontov.frame.Analysis"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.controlpanel" x="395" y="268">
+        <Association destinationClassName="br.com.pontov.frame.Knear"
+            endpointName="kn" kind="Simple"/>
+        <Association
+            destinationClassName="br.com.pontov.frame.testimages"
+            endpointName="ti" kind="Simple"/>
+        <Association destinationClassName="br.com.pontov.frame.NNeuroph"
+            endpointName="nh" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Count"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.ServerUDP" x="221" y="140">
+        <Association destinationClassName="br.com.pontov.frame.ComuInfo"
+            endpointName="varonto" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Carac" x="631" y="145"/>
+    <CommunicationClass name="br.com.pontov.frame.Autocroptest" x="678" y="329">
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.HistogramBack" x="31" y="350">
+        <Association
+            destinationClassName="br.com.pontov.frame.CaracBack"
+            endpointName="arrBack" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.CaracBack"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.CropBack" x="174" y="468">
+        <Association
+            destinationClassName="br.com.pontov.frame.CaracBack"
+            endpointName="arrBack" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.CaracBack"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.NNO" x="9" y="531">
+        <Association destinationClassName="br.com.pontov.frame.Carac"
+            endpointName="arr" kind="Simple"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.Confirm" x="662" y="459"/>
+    <CommunicationClass name="br.com.pontov.frame.Featurestest" x="273" y="284">
+        <Association
+            destinationClassName="br.com.pontov.frame.Caractest"
+            endpointName="arrtest" kind="Simple"/>
+        <Communication destinationClassName="br.com.pontov.frame.Caractest"/>
+    </CommunicationClass>
+    <CommunicationClass name="br.com.pontov.frame.ComuInfo" x="651" y="499"/>
+</ClassDiagram>
